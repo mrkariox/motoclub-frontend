@@ -1,3 +1,3 @@
 export default {
-    DASHBOARD:                                      'Dashboard',
-}
+  DASHBOARD: "Dashboard"
+};

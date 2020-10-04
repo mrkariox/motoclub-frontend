@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-        <router-link to="/">Home</router-link> |
+      <router-link :to="{ name: routeNames.DASHBOARD }">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-// import routeNames from "./router/routeNames";
+import routeNames from "@/router/routeNames";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "APP",
@@ -18,11 +19,12 @@ export default {
   },
   data() {
     return {
-      notWelcomeRoute: false
+      notWelcomeRoute: false,
+      routeNames: routeNames
     };
   },
   mounted() {
-    this.axios.get('/wp/v2/posts').then(res=>{
+    this.axios.get("/wp/v2/posts").then(res => {
       console.log(res.data);
     });
   },
@@ -42,11 +44,9 @@ export default {
       // setLoanDocs: "loanDocs/setLoanDocs"
     })
   },
-  watch: {
-  }
+  watch: {}
 };
 </script>
-import { mapGetters, mapActions } from "vuex";
 
 <style lang="scss">
 #app {
