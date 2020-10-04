@@ -7,22 +7,22 @@ import Material from "@/components/Material";
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: route.DASHBOARD,
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: Material
-  }
+    {
+        path: '/',
+        name: route.DASHBOARD,
+        component: Home
+    },
+    {
+        path: '/about',
+        name: 'About',
+        component: Material
+    }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 })
 
 export default router
