@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 // import routeNames from "./router/routeNames";
 
 export default {
@@ -47,6 +46,7 @@ export default {
   }
 };
 </script>
+import { mapGetters, mapActions } from "vuex";
 
 <style lang="scss">
 #app {
