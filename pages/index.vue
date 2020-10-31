@@ -60,12 +60,10 @@ export default {
   computed: {
     google: gmapApi,
     allMarkerRefNames () {
-      const markers = []
       const self = this
-      this.markers.forEach(function (value, i) {
-        markers.push(self.createMarkerRefName(i))
+      return this.markers.map((value, i) => {
+        return self.createMarkerRefName(i)
       })
-      return markers
     }
   },
   methods: {
@@ -74,6 +72,9 @@ export default {
 
       this._resetAllMarkersStatuses()
       this._setMarkerActive(marker)
+    },
+    createMarkerRefName (index) {
+      return 'main_map_marker_' + index
     },
     _setMarkerActive (markerRef) {
       markerRef.setIcon(this.markerIcons.active)
@@ -88,9 +89,6 @@ export default {
       this.allMarkerRefNames.forEach((markerRefName) => {
         self._setMarkerInactive(this.$refs[markerRefName][0].$markerObject)
       })
-    },
-    createMarkerRefName (index) {
-      return 'main_map_marker_' + index
     }
   }
   // asyncData (context) {
