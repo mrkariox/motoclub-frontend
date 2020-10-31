@@ -34,17 +34,17 @@ import { google } from '~/config/google'
 import PlacesRepository from '~/repositories/PlacesRepository'
 
 export default {
-  async asyncData (context) {
+  async fetch () {
     try {
       const repo = new PlacesRepository()
-      const places = await repo.getPlaces()
-      return { places }
+      this.places = await repo.getPlaces()
     } catch (e) {
-      context.error(e)
+      this.$nuxt.error({ statusCode: 404, message: e.message })
     }
   },
   data () {
     return {
+      places: [],
       center: {
         lat: 52.127956,
         lng: 19.285033
