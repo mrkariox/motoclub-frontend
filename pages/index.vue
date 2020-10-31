@@ -31,8 +31,18 @@
 <script>
 import { gmapApi } from 'vue2-google-maps'
 import { google } from '~/config/google'
+import PlacesRepository from '~/repositories/PlacesRepository'
 
 export default {
+  async asyncData (context) {
+    try {
+      const repo = new PlacesRepository()
+      const places = await repo.getPlaces()
+      return { places }
+    } catch (e) {
+      context.error(e)
+    }
+  },
   data () {
     return {
       markers: [
@@ -91,18 +101,5 @@ export default {
       })
     }
   }
-  // asyncData (context) {
-  //   const id = context.params
-  //   // try {
-  //   //   // Using the nuxtjs/http module here exposed via context.app
-  //   //   const post = await context.app.$axios.$get(
-  //   //     `https://api.nuxtjs.dev/posts/${id}`
-  //   //   )
-  //   //   return { post }
-  //   // } catch (e) {
-  //   //   context.error(e) // Show the nuxt error page with the thrown error
-  //   // }
-  //   console.log(id)
-  // }
 }
 </script>
