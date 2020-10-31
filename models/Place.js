@@ -5,6 +5,6 @@ export default class Place extends Model {
     super()
     this.name = data?.name
     this.lat = data?.lat
-    this.lng = data?.lat
+    this.lng = data?.lng
   }
 }

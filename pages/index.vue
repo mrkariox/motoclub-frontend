@@ -45,20 +45,6 @@ export default {
   },
   data () {
     return {
-      markers: [
-        {
-          position: {
-            lat: 51.127956,
-            lng: 18.285033
-          }
-        },
-        {
-          position: {
-            lat: 52.127956,
-            lng: 19.285033
-          }
-        }
-      ],
       center: {
         lat: 52.127956,
         lng: 19.285033
@@ -69,6 +55,19 @@ export default {
   },
   computed: {
     google: gmapApi,
+    markers () {
+      return this.places.map((place) => {
+        if (!place.lat || !place.lng) {
+          return null
+        }
+        return {
+          position: {
+            lat: place.lat,
+            lng: place.lng
+          }
+        }
+      })
+    },
     allMarkerRefNames () {
       const self = this
       return this.markers.map((value, i) => {
