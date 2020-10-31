@@ -33,15 +33,8 @@
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt keep-alive />
     </v-main>
-    <v-footer
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 

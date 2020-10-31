@@ -23,8 +23,7 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-  ],
+  plugins: ['~/plugins/google-map.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -34,7 +33,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -52,6 +52,12 @@ export default {
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
+
+  dev: process.env.NODE_ENV !== 'production',
+
+  env: {
+    googleApiKey: process.env.GOOGLE_MAPS_API_KEY
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
@@ -74,5 +80,6 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    transpile: [/^vue2-google-maps($|\/)/]
   }
 }
