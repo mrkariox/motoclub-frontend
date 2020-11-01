@@ -1,4 +1,5 @@
 import Place from '~/models/Place'
+import Image from '~/models/Image'
 
 export default class MotoclubClientResponseTransformer {
   getPlaceModelsArray (response) {
@@ -8,8 +9,18 @@ export default class MotoclubClientResponseTransformer {
     return response.map((elem) => {
       return new Place({
         name: elem.title?.rendered,
+        description: elem.content?.rendered,
         lat: elem.ACF?.map_marker?.lat,
-        lng: elem.ACF?.map_marker?.lng
+        lng: elem.ACF?.map_marker?.lng,
+        gallery: elem.ACF?.gallery?.map((image) => {
+          return new Image({
+            name: image.name,
+            alt: image.alt,
+            title: image.title,
+            url: image.url,
+            sizes: image.sizes
+          })
+        })
       })
     })
   }
