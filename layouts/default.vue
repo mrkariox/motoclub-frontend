@@ -7,7 +7,7 @@
       clipped
       fixed
     >
-      <component :is="asideComponent" :content="asideComponentProps" />
+      <component :is="asideComponent" v-if="isAsideComponentReady" :content="asideComponentProps" />
     </v-navigation-drawer>
     <v-app-bar
       fixed
@@ -38,6 +38,9 @@ export default {
   computed: {
     isAsideActive () {
       return this.$store.state['aside-bar'].isActive
+    },
+    isAsideComponentReady () {
+      return this.$store.state['aside-bar'].isAsideComponentReady
     },
     isNavButtonVisible () {
       return this.$store.state['app-bar'].isNavButtonVisible
