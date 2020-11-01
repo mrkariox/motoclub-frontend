@@ -1,8 +1,5 @@
-import Model from '~/models/Model'
-
-export default class Place extends Model {
+export default class Place {
   constructor (data) {
-    super()
     this.name = data?.name
     this.lat = data?.lat
     this.lng = data?.lng
