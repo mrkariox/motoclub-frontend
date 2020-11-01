@@ -2,7 +2,7 @@
   <v-row v-if="images" no-gutters>
     <v-col
       v-for="image in images"
-      :key="image"
+      :key="image.name"
       class="d-flex child-flex"
       cols="4"
     >
