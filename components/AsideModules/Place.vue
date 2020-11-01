@@ -1,9 +1,9 @@
 <template>
   <v-col>
-    <h2 class="text-h6">
-      {{ content.title }}
+    <h2 class="text-h6 mb-3">
+      {{ content.name }}
     </h2>
-    <div :v-html="content.description" />
+    <div v-if="content.description" class="text-body-2" v-html="content.description" />
     <gallery />
   </v-col>
 </template>
@@ -16,6 +16,9 @@ export default {
   components: {
     Gallery
   },
-  props: ['content']
+  props: {
+    // eslint-disable-next-line vue/require-default-prop
+    content: Object
+  }
 }
 </script>

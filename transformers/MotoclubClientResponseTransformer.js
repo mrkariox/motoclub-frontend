@@ -2,12 +2,12 @@ import Place from '~/models/Place'
 import Image from '~/models/Image'
 
 export default class MotoclubClientResponseTransformer {
-  getPlaceModelsArray (response) {
+  getPlaceModels (response) {
     if (!response) {
       return []
     }
-    return response.map((elem) => {
-      return new Place({
+    return response.reduce((m, elem) => {
+      m[elem.id] = new Place({
         id: elem.id,
         name: elem.title?.rendered,
         description: elem.content?.rendered,
@@ -23,6 +23,7 @@ export default class MotoclubClientResponseTransformer {
           })
         })
       })
-    })
+      return m
+    }, {})
   }
 }

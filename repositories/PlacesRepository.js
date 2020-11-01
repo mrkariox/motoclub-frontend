@@ -9,6 +9,6 @@ export default class PlacesRepository {
 
   async getPlaces () {
     const response = await this.client.getPosts()
-    return this.transformer.getPlaceModelsArray(response.data)
+    return this.transformer.getPlaceModels(response.data)
   }
 }

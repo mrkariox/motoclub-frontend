@@ -45,6 +45,7 @@ export default {
   },
   data () {
     return {
+      markerNameBase: 'main_map_marker_',
       places: [],
       center: {
         lat: 52.127956,
@@ -57,18 +58,21 @@ export default {
   computed: {
     google: gmapApi,
     markers () {
-      return this.places.map((place) => {
-        if (!place.lat || !place.lng) {
-          return null
+      const output = []
+      const places = this.places
+      for (const placeId in places) {
+        if (!places[placeId].lat || !places[placeId].lng) {
+          continue
         }
-        return {
-          placeId: place.id,
+        output.push({
+          placeId: places[placeId].id,
           position: {
-            lat: place.lat,
-            lng: place.lng
+            lat: places[placeId].lat,
+            lng: places[placeId].lng
           }
-        }
-      })
+        })
+      }
+      return output
     },
     allMarkerRefNames () {
       const self = this
@@ -83,10 +87,13 @@ export default {
 
       this._resetAllMarkersStatuses()
       this._setMarkerActive(marker)
-      this._showPlaceContentInAsideBar()
+      this._showPlaceContentInAsideBar(this._getPlaceIdFromMarkerName(markerRef))
     },
     createMarkerRefName (index) {
-      return 'main_map_marker_' + index
+      return this.markerNameBase + index
+    },
+    _getPlaceIdFromMarkerName (markerRefName) {
+      return markerRefName.replace(this.markerNameBase, '')
     },
     _setMarkerActive (markerRef) {
       markerRef.setIcon(this.markerIcons.active)
@@ -102,8 +109,14 @@ export default {
         self._setMarkerInactive(this.$refs[markerRefName][0].$markerObject)
       })
     },
-    _showPlaceContentInAsideBar () {
-      this.changeAsideComponent({ component: 'Place', props: { title: 'testowy tytul 2' } })
+    _showPlaceContentInAsideBar (placeId) {
+      this.changeAsideComponent({
+        component: 'Place',
+        props: {
+          name: this.places[placeId].name,
+          description: this.places[placeId].description
+        }
+      })
       this.changeNavButtonVisibility(true)
       this.changeAsideBarActiveState(true)
     },
