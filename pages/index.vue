@@ -102,7 +102,7 @@ export default {
       })
     },
     _showPlaceContentInAsideBar () {
-      this.changeAsideComponent('place')
+      this.changeAsideComponent('Place')
       this.changeAsideComponentProps({ title: 'testowy tytul 2' })
       this.changeNavButtonVisibility(true)
       this.changeAsideBarActiveState(true)

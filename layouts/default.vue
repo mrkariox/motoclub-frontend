@@ -28,25 +28,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-// eslint-disable-next-line no-unused-vars
-import Place from '~/components/AsideModules/Place'
 
 export default {
   data () {
     return {
-      place: Place,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
       title: 'Motoclub'
     }
   },
@@ -58,7 +43,10 @@ export default {
       return this.$store.state['app-bar'].isNavButtonVisible
     },
     asideComponent () {
-      return this[this.$store.state['aside-bar'].asideComponent]
+      if (!this.$store.state['aside-bar'].asideComponent) {
+        return
+      }
+      return () => import('../components/AsideModules/' + this.$store.state['aside-bar'].asideComponent)
     },
     asideComponentProps () {
       return this.$store.state['aside-bar'].asideComponentProps
