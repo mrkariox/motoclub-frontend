@@ -1,13 +1,13 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      v-model="isAsideActive"
+      :value="isAsideActive"
       disable-resize-watcher
       app
       clipped
       fixed
     >
-      <component :is="asideComponent" />
+      <component :is="asideComponent" :content="asideComponentProps" />
     </v-navigation-drawer>
     <v-app-bar
       fixed
@@ -28,10 +28,13 @@
 
 <script>
 import { mapActions } from 'vuex'
+// eslint-disable-next-line no-unused-vars
+import Place from '~/components/AsideModules/Place'
 
 export default {
   data () {
     return {
+      place: Place,
       items: [
         {
           icon: 'mdi-apps',
@@ -48,19 +51,17 @@ export default {
     }
   },
   computed: {
-    isAsideActive: {
-      get () {
-        return this.$store.state['aside-bar'].isActive
-      },
-      set () {
-        // required by v-navigation-drawer
-      }
+    isAsideActive () {
+      return this.$store.state['aside-bar'].isActive
     },
     isNavButtonVisible () {
       return this.$store.state['app-bar'].isNavButtonVisible
     },
     asideComponent () {
-      return this.$store.state['aside-bar'].asideComponent
+      return this[this.$store.state['aside-bar'].asideComponent]
+    },
+    asideComponentProps () {
+      return this.$store.state['aside-bar'].asideComponentProps
     }
   },
   methods: {

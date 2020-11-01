@@ -1,6 +1,7 @@
 export const state = () => ({
   isActive: false,
-  asideComponent: null
+  asideComponent: null,
+  asideComponentProps: {}
 })
 
 export const mutations = {
@@ -12,6 +13,9 @@ export const mutations = {
   },
   CHANGE_ASIDE_BAR_ACTIVE_STATE (state, isActive) {
     state.isActive = isActive
+  },
+  CHANGE_ASIDE_COMPONENT_PROPS (state, props) {
+    state.asideComponentProps = props
   }
 }
 
@@ -24,5 +28,8 @@ export const actions = {
   },
   changeAsideBarActiveState ({ commit }, isActive) {
     commit('CHANGE_ASIDE_BAR_ACTIVE_STATE', isActive)
+  },
+  changeAsideComponentProps ({ commit }, props) {
+    commit('CHANGE_ASIDE_COMPONENT_PROPS', props)
   }
 }

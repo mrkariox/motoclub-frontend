@@ -82,6 +82,7 @@ export default {
 
       this._resetAllMarkersStatuses()
       this._setMarkerActive(marker)
+      this._showPlaceContentInAsideBar()
     },
     createMarkerRefName (index) {
       return 'main_map_marker_' + index
@@ -100,8 +101,16 @@ export default {
         self._setMarkerInactive(this.$refs[markerRefName][0].$markerObject)
       })
     },
+    _showPlaceContentInAsideBar () {
+      this.changeAsideComponent('place')
+      this.changeAsideComponentProps({ title: 'testowy tytul 2' })
+      this.changeNavButtonVisibility(true)
+      this.changeAsideBarActiveState(true)
+    },
     ...mapActions({
       changeAsideComponent: 'aside-bar/changeAsideComponent',
+      changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
+      changeAsideComponentProps: 'aside-bar/changeAsideComponentProps',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
     })
   }
