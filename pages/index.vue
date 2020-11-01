@@ -114,7 +114,8 @@ export default {
         component: 'Place',
         props: {
           name: this.places[placeId].name,
-          description: this.places[placeId].description
+          description: this.places[placeId].description,
+          gallery: this.places[placeId].gallery
         }
       })
       this.changeNavButtonVisibility(true)

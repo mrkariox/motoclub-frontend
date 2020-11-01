@@ -1,14 +1,13 @@
 <template>
-  <v-row no-gutters>
+  <v-row v-if="images" no-gutters>
     <v-col
-      v-for="n in 9"
-      :key="n"
+      v-for="image in images"
+      :key="image"
       class="d-flex child-flex"
       cols="4"
     >
       <v-img
-        :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-        :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+        :src="image.sizes['thumbnail-square']"
         aspect-ratio="1"
         class="grey lighten-2"
       />
@@ -18,5 +17,8 @@
 
 <script>
 export default {
+  props: {
+    images: Array
+  }
 }
 </script>
