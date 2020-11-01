@@ -30,6 +30,7 @@
 
 <script>
 import { gmapApi } from 'vue2-google-maps'
+import { mapActions } from 'vuex'
 import { google } from '~/config/google'
 import PlacesRepository from '~/repositories/PlacesRepository'
 
@@ -98,7 +99,11 @@ export default {
       this.allMarkerRefNames.forEach((markerRefName) => {
         self._setMarkerInactive(this.$refs[markerRefName][0].$markerObject)
       })
-    }
+    },
+    ...mapActions({
+      changeAsideComponent: 'aside-bar/changeAsideComponent',
+      changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
+    })
   }
 }
 </script>

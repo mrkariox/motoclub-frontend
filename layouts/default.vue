@@ -1,35 +1,23 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="isAsideActive"
       disable-resize-watcher
       app
       clipped
       fixed
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <component :is="asideComponent" />
     </v-navigation-drawer>
     <v-app-bar
       fixed
       clipped-left
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon
+        v-if="isNavButtonVisible"
+        @click="toggleAsideBar"
+      />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-main>
@@ -39,10 +27,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
-      drawer: false,
       items: [
         {
           icon: 'mdi-apps',
@@ -57,6 +46,27 @@ export default {
       ],
       title: 'Motoclub'
     }
+  },
+  computed: {
+    isAsideActive: {
+      get () {
+        return this.$store.state['aside-bar'].isActive
+      },
+      set () {
+        // required by v-navigation-drawer
+      }
+    },
+    isNavButtonVisible () {
+      return this.$store.state['app-bar'].isNavButtonVisible
+    },
+    asideComponent () {
+      return this.$store.state['aside-bar'].asideComponent
+    }
+  },
+  methods: {
+    ...mapActions({
+      toggleAsideBar: 'aside-bar/toggleAsideBar'
+    })
   }
 }
 </script>
