@@ -1,5 +1,6 @@
 export default class Place {
   constructor (data) {
+    this.id = data?.id
     this.name = data?.name
     this.description = data?.description
     this.lat = data?.lat

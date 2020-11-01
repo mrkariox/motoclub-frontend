@@ -16,14 +16,14 @@
     }"
   >
     <GmapMarker
-      v-for="(m, index) in markers"
-      :key="index"
-      :ref="createMarkerRefName(index)"
+      v-for="(m) in markers"
+      :key="m.placeId"
+      :ref="createMarkerRefName(m.placeId)"
       :position="m.position"
       :clickable="true"
       :visible="true"
       :icon="markerIcons.default"
-      @click="handleMarkerClick($event, createMarkerRefName(index))"
+      @click="handleMarkerClick($event, createMarkerRefName(m.placeId))"
     />
   </GmapMap>
 </template>
@@ -62,6 +62,7 @@ export default {
           return null
         }
         return {
+          placeId: place.id,
           position: {
             lat: place.lat,
             lng: place.lng
@@ -71,8 +72,8 @@ export default {
     },
     allMarkerRefNames () {
       const self = this
-      return this.markers.map((value, i) => {
-        return self.createMarkerRefName(i)
+      return this.markers.map((marker) => {
+        return self.createMarkerRefName(marker.placeId)
       })
     }
   },

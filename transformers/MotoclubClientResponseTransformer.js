@@ -8,6 +8,7 @@ export default class MotoclubClientResponseTransformer {
     }
     return response.map((elem) => {
       return new Place({
+        id: elem.id,
         name: elem.title?.rendered,
         description: elem.content?.rendered,
         lat: elem.ACF?.map_marker?.lat,

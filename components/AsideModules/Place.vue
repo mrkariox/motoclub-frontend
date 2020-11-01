@@ -1,6 +1,9 @@
 <template>
   <v-col>
-    {{ content.title }}
+    <h2 class="text-h6">
+      {{ content.title }}
+    </h2>
+    <div :v-html="content.description" />
     <gallery />
   </v-col>
 </template>
