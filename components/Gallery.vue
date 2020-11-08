@@ -12,31 +12,14 @@
         @click="openGallery(index)"
       />
     </v-col>
-    <v-dialog
-      v-model="galleryShown"
-      max-width="1280"
-      content-class="bg-dark-gray"
-    >
-      <v-carousel v-model="carouselIndex" height="auto">
-        <v-carousel-item
-          v-for="(image,i) in images"
-          :key="i"
-          eager
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        >
-          <v-img
-            :src="image.sizes['max-image-size']"
-            eager
-          />
-        </v-carousel-item>
-      </v-carousel>
-    </v-dialog>
+    <gallery-modal v-model="galleryShown" :images="images" :index="carouselIndex" />
   </v-row>
 </template>
 
 <script>
+import GalleryModal from '@/components/GalleryModal'
 export default {
+  components: { GalleryModal },
   props: {
     // eslint-disable-next-line vue/require-default-prop
     images: Array
