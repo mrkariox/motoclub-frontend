@@ -6,11 +6,13 @@
       class="d-flex child-flex"
       cols="4"
     >
-      <v-img
-        :src="image.sizes['thumbnail-square']"
-        aspect-ratio="1"
-        @click="openGallery(index)"
-      />
+      <div class="cursor-pointer">
+        <v-img
+          :src="image.sizes['thumbnail-square']"
+          aspect-ratio="1"
+          @click="openGallery(index)"
+        />
+      </div>
     </v-col>
     <gallery-modal v-model="galleryShown" :images="images" :index="carouselIndex" />
   </v-row>
