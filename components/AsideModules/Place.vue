@@ -3,7 +3,7 @@
     <h2 class="text-h6 mb-3">
       {{ content.name }}
     </h2>
-    <div v-if="content.description" class="text-body-2 pb-2">
+    <div v-if="content.description" class="text-body-2 mb-5">
       {{ content.description }}
     </div>
     <gallery :images="content.gallery" />
