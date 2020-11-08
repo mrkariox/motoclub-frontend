@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      :value="isAsideActive"
+      v-model="isAsideActive"
       disable-resize-watcher
       app
       clipped
@@ -36,8 +36,13 @@ export default {
     }
   },
   computed: {
-    isAsideActive () {
-      return this.$store.state['aside-bar'].isActive
+    isAsideActive: {
+      get () {
+        return this.$store.state['aside-bar'].isActive
+      },
+      set (value) {
+        this.changeAsideBarActiveState(value)
+      }
     },
     isAsideComponentReady () {
       return this.$store.state['aside-bar'].isAsideComponentReady
@@ -57,7 +62,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      toggleAsideBar: 'aside-bar/toggleAsideBar'
+      toggleAsideBar: 'aside-bar/toggleAsideBar',
+      changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState'
     })
   }
 }

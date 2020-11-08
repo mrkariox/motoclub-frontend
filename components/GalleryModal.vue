@@ -27,7 +27,9 @@ export default {
   name: 'GalleryModal',
   props: {
     value: Boolean,
+    // eslint-disable-next-line
     images: Array,
+    // eslint-disable-next-line
     index: Number
   },
   computed: {
@@ -45,7 +47,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

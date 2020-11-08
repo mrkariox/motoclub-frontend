@@ -9,7 +9,9 @@ export const mutations = {
 }
 
 export const actions = {
-  changeNavButtonVisibility ({ commit }, isVisible) {
-    commit('CHANGE_NAV_BUTTON_VISIBILITY', isVisible)
+  changeNavButtonVisibility ({ commit, state }, isVisible) {
+    if (state.isNavButtonVisible !== isVisible) {
+      commit('CHANGE_NAV_BUTTON_VISIBILITY', isVisible)
+    }
   }
 }

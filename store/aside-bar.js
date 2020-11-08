@@ -24,8 +24,10 @@ export const mutations = {
 }
 
 export const actions = {
-  changeAsideBarActiveState ({ commit }, isActive) {
-    commit('CHANGE_ASIDE_BAR_ACTIVE_STATE', isActive)
+  changeAsideBarActiveState ({ commit, state }, isActive) {
+    if (state.isActive !== isActive) {
+      commit('CHANGE_ASIDE_BAR_ACTIVE_STATE', isActive)
+    }
   },
   toggleAsideBar ({ commit }) {
     commit('TOGGLE_ASIDE_BAR')
