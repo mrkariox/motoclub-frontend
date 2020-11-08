@@ -13,15 +13,17 @@ export default class MotoclubClientResponseTransformer {
         description: elem.content?.rendered,
         lat: elem.ACF?.map_marker?.lat,
         lng: elem.ACF?.map_marker?.lng,
-        gallery: elem.ACF?.gallery?.map((image) => {
-          return new Image({
-            name: image.name,
-            alt: image.alt,
-            title: image.title,
-            url: image.url,
-            sizes: image.sizes
+        gallery: (elem.ACF?.gallery && Array.isArray(elem.ACF?.gallery))
+          ? elem.ACF?.gallery?.map((image) => {
+            return new Image({
+              name: image.name,
+              alt: image.alt,
+              title: image.title,
+              url: image.url,
+              sizes: image.sizes
+            })
           })
-        })
+          : []
       })
       return m
     }, {})
