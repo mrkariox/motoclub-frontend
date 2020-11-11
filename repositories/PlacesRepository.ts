@@ -1,7 +1,11 @@
 import MotoclubClientResponseTransformer from '~/transformers/MotoclubClientResponseTransformer'
+import Motoclub from '~/clients/Motoclub'
 
 export default class PlacesRepository {
-  constructor ($motoclubClient) {
+  private client: Motoclub;
+  private transformer: MotoclubClientResponseTransformer;
+
+  constructor ($motoclubClient: Motoclub) {
     this.client = $motoclubClient
     this.transformer = new MotoclubClientResponseTransformer()
   }
