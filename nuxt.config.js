@@ -24,7 +24,11 @@ export default {
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/google-map.js'],
+  plugins: [
+    '~/plugins/google-map.js',
+    // repositories
+    '~/plugins/repositories/placesRepository.js'
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

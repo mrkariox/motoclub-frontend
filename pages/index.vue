@@ -32,13 +32,11 @@
 import { gmapApi } from 'vue2-google-maps'
 import { mapActions } from 'vuex'
 import { google } from '~/config/google'
-import PlacesRepository from '~/repositories/PlacesRepository'
 
 export default {
   async fetch () {
     try {
-      const repo = new PlacesRepository()
-      this.places = await repo.getPlaces()
+      this.places = await this.$placesRepository.getPlaces()
     } catch (e) {
       this.$nuxt.error({ statusCode: 404, message: e.message })
     }
