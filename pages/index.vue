@@ -80,6 +80,7 @@ export default {
     }
   },
   methods: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleMarkerClick (e, markerRef) {
       const marker = this.$refs[markerRef][0].$markerObject
 

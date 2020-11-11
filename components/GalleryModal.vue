@@ -37,7 +37,7 @@ export default {
       get () {
         return this.value
       },
-      set (value) {
+      set () {
         this.$emit('input', false)
       }
     },
