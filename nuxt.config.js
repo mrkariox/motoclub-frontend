@@ -27,7 +27,7 @@ export default {
   plugins: [
     '~/plugins/google-map.js',
     // repositories
-    '~/plugins/repositories/placesRepository.js'
+    '~/plugins/repositories/placesRepository.ts'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
