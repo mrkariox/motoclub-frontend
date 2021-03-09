@@ -23,7 +23,7 @@
       :clickable="true"
       :visible="true"
       :icon="markerIcons.default"
-      @click="handleMarkerClick($event, createMarkerRefName(m.placeId))"
+      @click="handleMarkerClick($event, m.placeId)"
     />
   </GmapMap>
 </template>
@@ -31,8 +31,10 @@
 <script lang="ts">
 import { gmapApi } from 'vue2-google-maps'
 import { mapActions } from 'vuex'
+import {} from '@types/googlemaps'
 import { google } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
+import { PlaceGroup } from '~/types/PlaceGroup'
 
 export default {
   async fetch () {
@@ -44,8 +46,8 @@ export default {
   },
   data () {
     return {
+      places: {} as PlaceGroup,
       markerNameBase: 'main_map_marker_',
-      places: [],
       center: {
         lat: 52.127956,
         lng: 19.285033
@@ -58,43 +60,34 @@ export default {
     google: gmapApi,
     markers () {
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
-    },
-    allMarkerRefNames () {
-      const self = this
-      return this.markers.map((marker) => {
-        return self.createMarkerRefName(marker.placeId)
-      })
     }
   },
   methods: {
-    handleMarkerClick (_event, markerRef) {
-      const marker = this.$refs[markerRef][0].$markerObject
+    handleMarkerClick (_event: Event, placeId: number): void {
+      const marker: google.maps.Marker = this.$refs[this.createMarkerRefName(placeId)][0].$markerObject
 
       this._resetAllMarkersStatuses()
       this._setMarkerActive(marker)
-      this._showPlaceContentInAsideBar(this._getPlaceIdFromMarkerName(markerRef))
+      this._showPlaceContentInAsideBar(placeId)
     },
-    createMarkerRefName (index) {
+    createMarkerRefName (index: number): string {
       return this.markerNameBase + index
     },
-    _getPlaceIdFromMarkerName (markerRefName) {
-      return markerRefName.replace(this.markerNameBase, '')
-    },
-    _setMarkerActive (markerRef) {
+    _setMarkerActive (markerRef: google.maps.Marker): void {
       markerRef.setIcon(this.markerIcons.active)
       markerRef.setAnimation(this.google.maps.Animation.BOUNCE)
     },
-    _setMarkerInactive (markerRef) {
+    _setMarkerInactive (markerRef: google.maps.Marker): void {
       markerRef.setIcon(this.markerIcons.default)
       markerRef.setAnimation(-1)
     },
-    _resetAllMarkersStatuses () {
+    _resetAllMarkersStatuses (): void {
       const self = this
-      this.allMarkerRefNames.forEach((markerRefName) => {
-        self._setMarkerInactive(this.$refs[markerRefName][0].$markerObject)
+      this.markers.forEach((marker) => {
+        self._setMarkerInactive(this.$refs[this.createMarkerRefName(marker.placeId)][0].$markerObject)
       })
     },
-    _showPlaceContentInAsideBar (placeId) {
+    _showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
         component: 'Place',
         props: {
@@ -111,6 +104,7 @@ export default {
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
     })
+
   }
 }
 </script>
