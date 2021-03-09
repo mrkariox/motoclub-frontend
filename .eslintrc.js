@@ -8,11 +8,11 @@ module.exports = {
     parser: '@typescript-eslint/parser'
   },
   extends: [
-    '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended'
+    'plugin:nuxt/recommended',
+    '@nuxtjs/eslint-config-typescript'
   ],
-  plugins: [
-  ],
-  // add your custom rules here
-  rules: {}
+  // plugins: ['@typescript-eslint']
+  rules: {
+    'no-undef': 'off'
+  }
 }

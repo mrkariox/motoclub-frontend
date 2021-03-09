@@ -80,8 +80,7 @@ export default {
     }
   },
   methods: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    handleMarkerClick (e, markerRef) {
+    handleMarkerClick (_event, markerRef) {
       const marker = this.$refs[markerRef][0].$markerObject
 
       this._resetAllMarkersStatuses()
@@ -123,7 +122,6 @@ export default {
     ...mapActions({
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
-      changeAsideComponentProps: 'aside-bar/changeAsideComponentProps',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
     })
   }
