@@ -1,4 +1,4 @@
-export type ImageStandard = {
+export type Image = {
   name: string;
   alt: string;
   title: string;

@@ -1,4 +1,4 @@
-import { ImageStandard } from '~/types/ImageStandard'
+import { Image } from '~/types/Image'
 
 export type Place = {
   id: string;
@@ -6,5 +6,5 @@ export type Place = {
   description: string;
   lat: string;
   lng: string;
-  gallery: ImageStandard[];
+  gallery: Image[];
 }
