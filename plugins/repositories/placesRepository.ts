@@ -8,7 +8,6 @@ declare module '@nuxt/types' {
   }
 }
 
-// @ts-ignore
 const placesRepository: Plugin = ({ $axios }, inject) => {
   inject('placesRepository', new PlacesRepository(new Motoclub($axios)))
 }
