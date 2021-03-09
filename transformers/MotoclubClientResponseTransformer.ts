@@ -1,7 +1,7 @@
 import { PlaceGroup } from '~/types/PlaceGroup'
 
 export default class MotoclubClientResponseTransformer {
-  getPlaceModels (response: any): PlaceGroup {
+  public static apiResponseToPlaceGroup (response: any): PlaceGroup {
     if (!response) {
       throw new Error('Empty input passed')
     }

@@ -28,10 +28,11 @@
   </GmapMap>
 </template>
 
-<script>
+<script lang="ts">
 import { gmapApi } from 'vue2-google-maps'
 import { mapActions } from 'vuex'
 import { google } from '~/config/google'
+import PlaceTransformer from '~/transformers/PlaceTransformer'
 
 export default {
   async fetch () {
@@ -56,21 +57,7 @@ export default {
   computed: {
     google: gmapApi,
     markers () {
-      const output = []
-      const places = this.places
-      for (const placeId in places) {
-        if (!places[placeId].lat || !places[placeId].lng) {
-          continue
-        }
-        output.push({
-          placeId: places[placeId].id,
-          position: {
-            lat: places[placeId].lat,
-            lng: places[placeId].lng
-          }
-        })
-      }
-      return output
+      return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
     },
     allMarkerRefNames () {
       const self = this
