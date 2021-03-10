@@ -2,8 +2,8 @@ import { Plugin } from '@nuxt/types'
 import PlacesRepository from '@/repositories/PlacesRepository'
 import Motoclub from '@/clients/Motoclub'
 
-declare module '@nuxt/types' {
-  interface Context {
+declare module 'vue/types/vue' {
+  interface Vue {
     $placesRepository: PlacesRepository
   }
 }
