@@ -60,7 +60,7 @@ export default Vue.extend({
   },
   computed: {
     google (): { maps: typeof google.maps } {
-      return gmapApi
+      return gmapApi()
     },
     markers (): MapMarkerData[] {
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
