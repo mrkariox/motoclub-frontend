@@ -29,14 +29,14 @@
 </template>
 
 <script lang="ts">
-// @ts-ignore
 import { gmapApi } from 'vue2-google-maps'
 import Vue from 'vue'
 import { mapActions } from 'vuex'
-import { google } from '~/config/google'
+import { google as googleConfig } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlaceGroup } from '~/types/PlaceGroup'
 import { MapMarkerData } from '~/types/MapMarkerData'
+import Marker = google.maps.Marker;
 
 export default Vue.extend({
   async fetch () {
@@ -54,8 +54,8 @@ export default Vue.extend({
         lat: 52.127956,
         lng: 19.285033
       },
-      markerIcons: google.markerIcons,
-      styles: google.styles
+      markerIcons: googleConfig.markerIcons,
+      styles: googleConfig.styles
     }
   },
   computed: {
@@ -67,28 +67,24 @@ export default Vue.extend({
   methods: {
     handleMarkerClick (_event: Event, placeId: number): void {
       this._resetAllMarkersStatuses()
-      this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Vue[] & Array<{$markerObject: {}}>)[0].$markerObject)
+      this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Vue[] & Array<{$markerObject: Marker}>)[0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
     },
     createMarkerRefName (index: number): string {
       return this.markerNameBase + index
     },
-    // @ts-ignore
-    _setMarkerActive (markerRef): void {
+    _setMarkerActive (markerRef: Marker): void {
       markerRef.setIcon(this.markerIcons.active)
-      // @ts-ignore
-      markerRef.setAnimation(this.google.maps.Animation.BOUNCE)
+      markerRef.setAnimation((this.google as { maps: { Animation: any } }).maps.Animation.BOUNCE)
     },
-    // @ts-ignore
-    _setMarkerInactive (markerRef): void {
+    _setMarkerInactive (markerRef: Marker): void {
       markerRef.setIcon(this.markerIcons.default)
       markerRef.setAnimation(-1)
     },
     _resetAllMarkersStatuses (): void {
       const self = this
-      this.markers.forEach((marker) => {
-        // @ts-ignore
-        self._setMarkerInactive(this.$refs[this.createMarkerRefName(marker.placeId)][0].$markerObject)
+      this.markers.forEach((marker: MapMarkerData) => {
+        self._setMarkerInactive((this.$refs[this.createMarkerRefName(marker.placeId)] as Vue[] & Array<{$markerObject: Marker}>)[0].$markerObject)
       })
     },
     _showPlaceContentInAsideBar (placeId: number): void {
