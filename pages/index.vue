@@ -35,6 +35,7 @@ import {} from '@types/googlemaps'
 import { google } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlaceGroup } from '~/types/PlaceGroup'
+import { MapMarkerData } from '~/types/MapMarkerData'
 
 export default {
   async fetch () {
@@ -47,7 +48,7 @@ export default {
   data () {
     return {
       places: {} as PlaceGroup,
-      markerNameBase: 'main_map_marker_',
+      markerNameBase: 'main_map_marker_' as string,
       center: {
         lat: 52.127956,
         lng: 19.285033
@@ -58,16 +59,14 @@ export default {
   },
   computed: {
     google: gmapApi,
-    markers () {
+    markers (): MapMarkerData[] {
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
     }
   },
   methods: {
     handleMarkerClick (_event: Event, placeId: number): void {
-      const marker: google.maps.Marker = this.$refs[this.createMarkerRefName(placeId)][0].$markerObject
-
       this._resetAllMarkersStatuses()
-      this._setMarkerActive(marker)
+      this._setMarkerActive(this.$refs[this.createMarkerRefName(placeId)][0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
     },
     createMarkerRefName (index: number): string {
