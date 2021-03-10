@@ -37,7 +37,6 @@ import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlaceGroup } from '~/types/PlaceGroup'
 import { MapMarkerData } from '~/types/MapMarkerData'
 import Marker = google.maps.Marker;
-import Animation = google.maps.Animation;
 
 export default Vue.extend({
   async fetch () {
@@ -60,7 +59,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    google (): {maps: {Animation: {BOUNCE: Animation.BOUNCE}}} {
+    google (): { maps: typeof google.maps } {
       return gmapApi
     },
     markers (): MapMarkerData[] {

@@ -1,1 +1,3 @@
-declare module 'vue2-google-maps';
+declare module 'vue2-google-maps' {
+  export const gmapApi: { maps: typeof google.maps }
+}
