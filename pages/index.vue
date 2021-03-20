@@ -69,7 +69,7 @@ export default Vue.extend({
   methods: {
     handleMarkerClick (_event: Event, placeId: number): void {
       this._resetAllMarkersStatuses()
-      this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Vue[] & Array<{$markerObject: Marker}>)[0].$markerObject)
+      this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
     },
     createMarkerRefName (index: number): string {
@@ -86,7 +86,7 @@ export default Vue.extend({
     _resetAllMarkersStatuses (): void {
       const self = this
       this.markers.forEach((marker: MapMarkerData) => {
-        self._setMarkerInactive((this.$refs[this.createMarkerRefName(marker.placeId)] as Vue[] & Array<{$markerObject: Marker}>)[0].$markerObject)
+        self._setMarkerInactive((this.$refs[this.createMarkerRefName(marker.placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       })
     },
     _showPlaceContentInAsideBar (placeId: number): void {
