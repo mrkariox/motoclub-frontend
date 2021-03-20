@@ -1,6 +1,6 @@
 import { Image } from '~/types/Image'
 
-export type Place = {
+export type PlaceConstructor = {
   id: number;
   name: string;
   description: string;

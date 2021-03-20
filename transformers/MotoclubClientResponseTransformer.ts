@@ -1,4 +1,5 @@
 import { PlaceGroup } from '~/types/PlaceGroup'
+import Place from '~/models/Place'
 
 export default class MotoclubClientResponseTransformer {
   public static apiResponseToPlaceGroup (response: any): PlaceGroup {
@@ -6,7 +7,7 @@ export default class MotoclubClientResponseTransformer {
       throw new Error('Empty input passed')
     }
     return response.reduce((m: PlaceGroup, elem: any) => {
-      m[elem.id] = {
+      m[elem.id] = new Place({
         id: elem.id,
         name: elem.title?.rendered,
         description: elem.content?.rendered,
@@ -23,7 +24,7 @@ export default class MotoclubClientResponseTransformer {
             }
           })
           : []
-      }
+      })
       return m
     }, {})
   }
