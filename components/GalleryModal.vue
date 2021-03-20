@@ -41,14 +41,14 @@ export default Vue.extend({
     }
   },
   computed: {
-    isVisible: () => ({
+    isVisible: {
       get (): boolean {
         return this.value
       },
       set (): void {
         this.$emit('input', false)
       }
-    }),
+    },
     currentIndex () {
       return this.index ? this.index : 0
     }
