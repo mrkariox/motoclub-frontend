@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    openGallery (index: any) {
+    openGallery (index: number) {
       const self = this
       this.carouselIndex = index
       setTimeout(() => {

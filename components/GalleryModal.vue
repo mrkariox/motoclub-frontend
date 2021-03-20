@@ -23,26 +23,32 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropOptions } from 'vue'
+import { Image } from '~/types/Image'
+
+const images: PropOptions<Image[]> = {
+  type: Array
+}
 
 export default Vue.extend({
   name: 'GalleryModal',
   props: {
     value: Boolean,
-    // eslint-disable-next-line
-    images: Array,
-    // eslint-disable-next-line
-    index: Number
+    images,
+    index: {
+      type: Number,
+      required: true
+    }
   },
   computed: {
-    isVisible: {
+    isVisible: () => ({
       get (): boolean {
         return this.value
       },
       set (): void {
         this.$emit('input', false)
       }
-    },
+    }),
     currentIndex () {
       return this.index ? this.index : 0
     }
