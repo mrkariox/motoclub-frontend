@@ -19,17 +19,19 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
-import GalleryModal from '@/components/GalleryModal'
+import Vue, { PropOptions } from 'vue'
+import GalleryModal from '@/components/GalleryModal.vue'
 import { Image } from '~/types/Image'
 
+const images: PropOptions<Image[]> = {
+  type: Array
+}
+
 export default Vue.extend({
+  name: 'Gallery',
   components: { GalleryModal },
   props: {
-    images: {
-      type: Array as PropType<Image[]>,
-      required: true
-    }
+    images
   },
   data () {
     return {
@@ -38,7 +40,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    openGallery (index) {
+    openGallery (index: any) {
       const self = this
       this.carouselIndex = index
       setTimeout(() => {

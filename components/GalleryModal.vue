@@ -22,8 +22,10 @@
   </v-dialog>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'GalleryModal',
   props: {
     value: Boolean,
@@ -34,10 +36,10 @@ export default {
   },
   computed: {
     isVisible: {
-      get () {
+      get (): boolean {
         return this.value
       },
-      set () {
+      set (): void {
         this.$emit('input', false)
       }
     },
@@ -45,5 +47,5 @@ export default {
       return this.index ? this.index : 0
     }
   }
-}
+})
 </script>

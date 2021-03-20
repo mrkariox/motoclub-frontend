@@ -63,6 +63,14 @@ export default {
     googleApiKey: process.env.GOOGLE_MAPS_API_KEY
   },
 
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: './**/*.{ts,vue}'
+      }
+    }
+  },
+
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

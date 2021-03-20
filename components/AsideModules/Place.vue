@@ -11,23 +11,21 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue'
-import Gallery from '~/components/Gallery'
+import Vue, { PropOptions } from 'vue'
+import Gallery from '@/components/Gallery.vue'
 import { Image } from '~/types/Image'
 
-interface Props {
-  name: string, description: string, gallery: Image[]
+const props: PropOptions<{ name: string, description: string, gallery: Image[] }> = {
+  type: Object
 }
+
 export default Vue.extend({
   name: 'Place',
   components: {
     Gallery
   },
   props: {
-    props: {
-      type: Object as PropType<Props>,
-      required: true
-    }
+    props
   }
 })
 </script>
