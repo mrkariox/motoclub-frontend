@@ -18,13 +18,18 @@
   </v-row>
 </template>
 
-<script>
+<script lang="ts">
+import Vue, { PropType } from 'vue'
 import GalleryModal from '@/components/GalleryModal'
-export default {
+import { Image } from '~/types/Image'
+
+export default Vue.extend({
   components: { GalleryModal },
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    images: Array
+    images: {
+      type: Array as PropType<Image[]>,
+      required: true
+    }
   },
   data () {
     return {
@@ -41,5 +46,5 @@ export default {
       }, 200)
     }
   }
-}
+})
 </script>

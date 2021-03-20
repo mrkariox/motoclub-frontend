@@ -7,7 +7,7 @@
       clipped
       fixed
     >
-      <component :is="asideComponent" v-if="isAsideComponentReady" :content="asideComponentProps" />
+      <component :is="asideComponent" v-if="isAsideComponentReady" :props="asideComponentProps" />
     </v-navigation-drawer>
     <v-app-bar
       fixed

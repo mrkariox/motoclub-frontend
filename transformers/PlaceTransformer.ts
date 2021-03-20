@@ -7,16 +7,16 @@ export default class PlaceTransformer {
     for (const placeId in places) {
       if (
         !Object.prototype.hasOwnProperty.call(places, placeId) ||
-        !places[placeId].lat ||
-        !places[placeId].lng
+        !places[placeId].lat || places[placeId].lat === null ||
+        !places[placeId].lng || places[placeId].lng === null
       ) {
         continue
       }
       output.push({
         placeId: places[placeId].id,
         position: {
-          lat: places[placeId].lat,
-          lng: places[placeId].lng
+          lat: places[placeId].lat as number,
+          lng: places[placeId].lng as number
         }
       })
     }

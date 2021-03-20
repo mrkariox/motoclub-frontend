@@ -1,26 +1,33 @@
 <template>
   <v-col>
     <h2 class="text-h6 mb-3">
-      {{ content.name }}
+      {{ props.name }}
     </h2>
-    <div v-if="content.description" class="text-body-2 mb-5">
-      {{ content.description }}
+    <div v-if="props.description" class="text-body-2 mb-5">
+      {{ props.description }}
     </div>
-    <gallery :images="content.gallery" />
+    <gallery :images="props.gallery" />
   </v-col>
 </template>
 
-<script>
+<script lang="ts">
+import Vue, { PropType } from 'vue'
 import Gallery from '~/components/Gallery'
+import { Image } from '~/types/Image'
 
-export default {
+interface Props {
+  name: string, description: string, gallery: Image[]
+}
+export default Vue.extend({
   name: 'Place',
   components: {
     Gallery
   },
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    content: Object
+    props: {
+      type: Object as PropType<Props>,
+      required: true
+    }
   }
-}
+})
 </script>
