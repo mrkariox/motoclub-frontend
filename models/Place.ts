@@ -2,12 +2,12 @@ import { Image } from '~/types/Image'
 import { PlaceConstructor } from '~/types/PlaceConstructor'
 
 export default class Place {
-  private id: number;
-  private name: string;
-  private description: string;
-  private lat: number;
-  private lng: number;
-  private gallery: Image[] | [];
+  public readonly id: number;
+  public readonly name: string;
+  public readonly description: string;
+  public readonly lat: number;
+  public readonly lng: number;
+  public readonly gallery: Image[];
 
   constructor ({ description, gallery, id, lat, lng, name }: PlaceConstructor) {
     this.id = id

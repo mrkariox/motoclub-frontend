@@ -1,7 +1,9 @@
+import { SupportedImageSizes } from '~/types/SupportedImageSizes'
+
 export type Image = {
   name: string;
   alt: string;
   title: string;
   url: string;
-  sizes: {[name: string]: string | number};
+  sizes: SupportedImageSizes;
 }
