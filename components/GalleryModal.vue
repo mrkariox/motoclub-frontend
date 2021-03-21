@@ -48,8 +48,8 @@ export default Vue.extend({
       set (): void {
         this.$emit('input', false)
       }
-    } as any,
-    currentIndex () {
+    },
+    currentIndex (): number {
       return this.index ? this.index : 0
     }
   }
