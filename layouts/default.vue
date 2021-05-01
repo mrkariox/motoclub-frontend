@@ -55,7 +55,7 @@ export default Vue.extend({
       return (this.$store.state['aside-bar'] as AsideBarState).isAsideComponentReady
     },
     isNavButtonVisible () {
-      return (this.$store.state['aside-bar'] as AppBarState).isNavButtonVisible
+      return (this.$store.state['app-bar'] as AppBarState).isNavButtonVisible
     },
     asideComponent () {
       if (!(this.$store.state['aside-bar'] as AsideBarState).asideComponent) {
