@@ -39,52 +39,22 @@
 </template>
 
 <script lang="ts">
-import { gmapApi } from 'vue2-google-maps'
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
 import { mapActions } from 'vuex'
-import { google as googleConfig } from '~/config/google'
-import PlaceTransformer from '~/transformers/PlaceTransformer'
-import { MapMarkerData } from '~/types/MapMarkerData'
-import { PlacesState } from '~/store/places'
 import Search from '~/components/Search.vue'
 import MapSearchWrapper from '~/components/MapSearchWrapper.vue'
+import MapAndMarkers from '~/mixins/MapAndMarkers'
+import { PlacesState } from '~/store/places'
 import Marker = google.maps.Marker;
 
-interface DataTypes {
-  markerNameBase: string
-  center: {
-    lat: number,
-    lng: number
-  },
-  markerIcons: typeof googleConfig.markerIcons,
-  styles: typeof googleConfig.styles
-}
-
-export default Vue.extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>).extend({
   components: { MapSearchWrapper, Search },
-  data: (): DataTypes => {
-    return {
-      markerNameBase: 'main_map_marker_',
-      center: {
-        lat: 52.127956,
-        lng: 19.285033
-      },
-      markerIcons: googleConfig.markerIcons,
-      styles: googleConfig.styles
-    }
-  },
+  mixins: [
+    MapAndMarkers
+  ],
   computed: {
-    places () {
-      return (this.$store.state.places as PlacesState).places
-    },
-    activePlaceId () {
+    activePlaceId (): number {
       return (this.$store.state.places as PlacesState).activePlaceId
-    },
-    google (): { maps: typeof google.maps } {
-      return gmapApi()
-    },
-    markers (): MapMarkerData[] {
-      return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
     }
   },
   watch: {
@@ -109,23 +79,6 @@ export default Vue.extend({
       this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
     },
-    createMarkerRefName (index: number): string {
-      return this.markerNameBase + index
-    },
-    _setMarkerActive (markerRef: Marker): void {
-      markerRef.setIcon(this.markerIcons.active)
-      markerRef.setAnimation(this.google.maps.Animation.BOUNCE)
-    },
-    _setMarkerInactive (markerRef: Marker): void {
-      markerRef.setIcon(this.markerIcons.default)
-      markerRef.setAnimation(-1)
-    },
-    _resetAllMarkersStatuses (): void {
-      const self = this
-      this.markers.forEach((marker: MapMarkerData) => {
-        self._setMarkerInactive((this.$refs[this.createMarkerRefName(marker.placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
-      })
-    },
     _showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
         component: 'Place',
@@ -141,7 +94,6 @@ export default Vue.extend({
     ...mapActions({
       fetchPlaces: 'places/fetchPlaces',
       setActivePlace: 'places/setActivePlace',
-      setSearchedPlaceInputValue: 'places/setSearchedPlaceInputValue',
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
