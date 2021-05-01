@@ -34,12 +34,11 @@ import Vue from 'vue'
 import { mapActions } from 'vuex'
 import { google as googleConfig } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
-import { PlaceGroup } from '~/types/PlaceGroup'
 import { MapMarkerData } from '~/types/MapMarkerData'
+import { PlacesState } from '~/store/places'
 import Marker = google.maps.Marker;
 
 interface DataTypes {
-  places: PlaceGroup,
   markerNameBase: string
   center: {
     lat: number,
@@ -50,16 +49,8 @@ interface DataTypes {
 }
 
 export default Vue.extend({
-  async fetch () {
-    try {
-      this.places = await this.$placesRepository.getPlaces()
-    } catch (e) {
-      this.$nuxt.error({ statusCode: 404, message: e.message })
-    }
-  },
   data: (): DataTypes => {
     return {
-      places: {},
       markerNameBase: 'main_map_marker_',
       center: {
         lat: 52.127956,
@@ -70,12 +61,18 @@ export default Vue.extend({
     }
   },
   computed: {
+    places () {
+      return (this.$store.state.places as PlacesState).places
+    },
     google (): { maps: typeof google.maps } {
       return gmapApi()
     },
     markers (): MapMarkerData[] {
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
     }
+  },
+  mounted () {
+    this.fetchPlaces()
   },
   methods: {
     handleMarkerClick (_event: Event, placeId: number): void {
@@ -113,6 +110,7 @@ export default Vue.extend({
       this.changeAsideBarActiveState(true)
     },
     ...mapActions({
+      fetchPlaces: 'places/fetchPlaces',
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'

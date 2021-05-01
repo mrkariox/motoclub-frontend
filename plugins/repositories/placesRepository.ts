@@ -8,6 +8,13 @@ declare module 'vue/types/vue' {
   }
 }
 
+declare module 'vuex/types/index' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+  interface Store<S> {
+    $placesRepository: PlacesRepository
+  }
+}
+
 const placesRepository: Plugin = ({ $axios }, inject) => {
   inject('placesRepository', new PlacesRepository(new Motoclub($axios)))
 }
