@@ -16,7 +16,7 @@ import Gallery from '@/components/Gallery.vue'
 import { Image } from '~/types/Image'
 
 const props: PropOptions<{ name: string, description: string, gallery: Image[] }> = {
-  type: Object
+  required: true
 }
 
 export default Vue.extend({

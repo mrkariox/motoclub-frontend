@@ -27,7 +27,7 @@ import Vue, { PropOptions } from 'vue'
 import { Image } from '~/types/Image'
 
 const images: PropOptions<Image[]> = {
-  type: Array
+  required: true
 }
 
 export default Vue.extend({
