@@ -1,10 +1,10 @@
 import { ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({
-  isActive: false,
+  isActive: false as boolean,
   asideComponent: null as string | null,
-  asideComponentProps: {},
-  isAsideComponentReady: false
+  asideComponentProps: {} as {[key: string]: any},
+  isAsideComponentReady: false as boolean
 })
 
 export type AsideBarState = ReturnType<typeof state>

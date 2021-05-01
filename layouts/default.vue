@@ -26,38 +26,45 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { mapActions } from 'vuex'
+import { AsideBarState } from '@/store/aside-bar'
+import { AppBarState } from '@/store/app-bar'
 
-export default {
-  data () {
+interface DataType {
+  title: string
+}
+
+export default Vue.extend({
+  data: (): DataType => {
     return {
       title: 'Motoclub'
     }
   },
   computed: {
     isAsideActive: {
-      get () {
-        return this.$store.state['aside-bar'].isActive
+      get (): boolean {
+        return (this.$store.state['aside-bar'] as AsideBarState).isActive
       },
-      set (value) {
+      set (value: boolean) {
         this.changeAsideBarActiveState(value)
       }
     },
     isAsideComponentReady () {
-      return this.$store.state['aside-bar'].isAsideComponentReady
+      return (this.$store.state['aside-bar'] as AsideBarState).isAsideComponentReady
     },
     isNavButtonVisible () {
-      return this.$store.state['app-bar'].isNavButtonVisible
+      return (this.$store.state['aside-bar'] as AppBarState).isNavButtonVisible
     },
     asideComponent () {
-      if (!this.$store.state['aside-bar'].asideComponent) {
-        return
+      if (!(this.$store.state['aside-bar'] as AsideBarState).asideComponent) {
+        return null
       }
       return () => import('../components/AsideModules/' + this.$store.state['aside-bar'].asideComponent)
     },
     asideComponentProps () {
-      return this.$store.state['aside-bar'].asideComponentProps
+      return (this.$store.state['aside-bar'] as AsideBarState).asideComponentProps
     }
   },
   methods: {
@@ -66,5 +73,5 @@ export default {
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState'
     })
   }
-}
+})
 </script>

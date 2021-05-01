@@ -1,7 +1,7 @@
 import { ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({
-  isNavButtonVisible: false
+  isNavButtonVisible: false as boolean
 })
 
 export type AppBarState = ReturnType<typeof state>
