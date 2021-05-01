@@ -37,6 +37,7 @@ interface DataType {
 }
 
 export default Vue.extend({
+  name: 'Default',
   data: (): DataType => {
     return {
       title: 'Motoclub'
