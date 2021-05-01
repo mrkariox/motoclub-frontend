@@ -38,6 +38,17 @@ import { PlaceGroup } from '~/types/PlaceGroup'
 import { MapMarkerData } from '~/types/MapMarkerData'
 import Marker = google.maps.Marker;
 
+interface DataTypes {
+  places: PlaceGroup,
+  markerNameBase: string
+  center: {
+    lat: number,
+    lng: number
+  },
+  markerIcons: typeof googleConfig.markerIcons,
+  styles: typeof googleConfig.styles
+}
+
 export default Vue.extend({
   async fetch () {
     try {
@@ -46,10 +57,10 @@ export default Vue.extend({
       this.$nuxt.error({ statusCode: 404, message: e.message })
     }
   },
-  data () {
+  data: (): DataTypes => {
     return {
-      places: {} as PlaceGroup,
-      markerNameBase: 'main_map_marker_' as string,
+      places: {},
+      markerNameBase: 'main_map_marker_',
       center: {
         lat: 52.127956,
         lng: 19.285033
