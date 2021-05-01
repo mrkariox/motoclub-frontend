@@ -23,7 +23,10 @@ export const actions: ActionTree<PlacesState, PlacesState> = {
       commit('SET_PLACES', places)
     })
   },
-  setActivePlace ({ commit }, placeId: number) {
-    commit('SET_ACTIVE_PLACE', placeId)
+  setActivePlace ({ state, commit }, placeId: number) {
+    // if place with specific ID exists in state set it as active
+    if (state.places[placeId]) {
+      commit('SET_ACTIVE_PLACE', placeId)
+    }
   }
 }
