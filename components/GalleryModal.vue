@@ -5,17 +5,17 @@
     max-width="1280"
     content-class="bg-dark-gray"
   >
-    <v-carousel :value="currentIndex" height="auto">
+    <v-carousel :value="currentIndex" class="height-carousel" height="auto">
       <v-carousel-item
         v-for="(image,i) in images"
         :key="i"
-        eager
         reverse-transition="fade-transition"
         transition="fade-transition"
       >
         <v-img
+          max-height="90vh"
+          contain
           :src="image.sizes['max-image-size']"
-          eager
         />
       </v-carousel-item>
     </v-carousel>
