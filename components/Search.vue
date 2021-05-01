@@ -4,7 +4,6 @@
       :items="searchItems"
       rounded
       solo
-      auto-select-first
       clearable
       :value="activePlaceId"
       :no-data-text="noDataText"
