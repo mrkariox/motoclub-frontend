@@ -64,6 +64,9 @@ export default Vue.extend({
     places () {
       return (this.$store.state.places as PlacesState).places
     },
+    activePlaceId () {
+      return (this.$store.state.places as PlacesState).activePlaceId
+    },
     google (): { maps: typeof google.maps } {
       return gmapApi()
     },
@@ -71,11 +74,19 @@ export default Vue.extend({
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
     }
   },
+  watch: {
+    activePlaceId (placeId: number) {
+      this.markerActivationAction(placeId)
+    }
+  },
   mounted () {
     this.fetchPlaces()
   },
   methods: {
     handleMarkerClick (_event: Event, placeId: number): void {
+      this.setActivePlace(placeId)
+    },
+    markerActivationAction (placeId: number) {
       this._resetAllMarkersStatuses()
       this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
@@ -111,6 +122,7 @@ export default Vue.extend({
     },
     ...mapActions({
       fetchPlaces: 'places/fetchPlaces',
+      setActivePlace: 'places/setActivePlace',
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
