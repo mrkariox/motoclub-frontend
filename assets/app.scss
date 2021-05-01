@@ -1,4 +1,10 @@
-// Variables
+// VARIABLES
 @import "variables/colors";
+
+// REUSABLES
 @import "reusables/backgrounds";
 @import "reusables/reusables";
+
+// COMPONENTS
+@import "components/search";
+@import "components/mapSearchWrapper";

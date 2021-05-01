@@ -1,31 +1,41 @@
 <template>
-  <GmapMap
-    :center="center"
-    :zoom="7"
-    map-type-id="terrain"
-    style="width: 100%; height: 100%"
-    :options="{
-      zoomControl: true,
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: false,
-      fullscreenControl: true,
-      disableDefaultUi: false,
-      styles:styles
-    }"
-  >
-    <GmapMarker
-      v-for="(m) in markers"
-      :key="m.placeId"
-      :ref="createMarkerRefName(m.placeId)"
-      :position="m.position"
-      :clickable="true"
-      :visible="true"
-      :icon="markerIcons.default"
-      @click="handleMarkerClick($event, m.placeId)"
-    />
-  </GmapMap>
+  <div style="width: 100%; height: 100%; position: relative">
+    <map-search-wrapper>
+      <search
+        :places="places"
+        :active-place-id="activePlaceId"
+        @change="handleSearchChange"
+      />
+    </map-search-wrapper>
+    <GmapMap
+      :center="center"
+      :zoom="7"
+      map-type-id="terrain"
+      style="width: 100%; height: 100%"
+      :options="{
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: true,
+        disableDefaultUi: false,
+        styles:styles,
+        fullscreenControl: false
+      }"
+    >
+      <GmapMarker
+        v-for="(m) in markers"
+        :key="m.placeId"
+        :ref="createMarkerRefName(m.placeId)"
+        :position="m.position"
+        :clickable="true"
+        :visible="true"
+        :icon="markerIcons.default"
+        @click="handleMarkerClick($event, m.placeId)"
+      />
+    </GmapMap>
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,6 +46,8 @@ import { google as googleConfig } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { MapMarkerData } from '~/types/MapMarkerData'
 import { PlacesState } from '~/store/places'
+import Search from '~/components/Search.vue'
+import MapSearchWrapper from '~/components/MapSearchWrapper.vue'
 import Marker = google.maps.Marker;
 
 interface DataTypes {
@@ -49,6 +61,7 @@ interface DataTypes {
 }
 
 export default Vue.extend({
+  components: { MapSearchWrapper, Search },
   data: (): DataTypes => {
     return {
       markerNameBase: 'main_map_marker_',
@@ -83,6 +96,11 @@ export default Vue.extend({
     this.fetchPlaces()
   },
   methods: {
+    handleSearchChange (placeId: number | null) {
+      if (placeId !== null) {
+        this.setActivePlace(placeId)
+      }
+    },
     handleMarkerClick (_event: Event, placeId: number): void {
       this.setActivePlace(placeId)
     },
@@ -123,11 +141,11 @@ export default Vue.extend({
     ...mapActions({
       fetchPlaces: 'places/fetchPlaces',
       setActivePlace: 'places/setActivePlace',
+      setSearchedPlaceInputValue: 'places/setSearchedPlaceInputValue',
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'
     })
-
   }
 })
 </script>
