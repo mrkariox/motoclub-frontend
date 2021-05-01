@@ -18,8 +18,8 @@ export const mutations: MutationTree<PlacesState> = {
 }
 
 export const actions: ActionTree<PlacesState, PlacesState> = {
-  fetchPlaces ({ commit }) {
-    this.$placesRepository.getPlaces().then((places) => {
+  fetchPlaces ({ commit }): Promise<void> {
+    return this.$placesRepository.getPlaces().then((places) => {
       commit('SET_PLACES', places)
     })
   },

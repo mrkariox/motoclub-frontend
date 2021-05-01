@@ -47,11 +47,20 @@ import MapAndMarkers from '~/mixins/MapAndMarkers'
 import { PlacesState } from '~/store/places'
 import Marker = google.maps.Marker;
 
+interface DataType {
+  placeIdQueryParamName: string
+}
+
 export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>).extend({
   components: { MapSearchWrapper, Search },
   mixins: [
     MapAndMarkers
   ],
+  data: (): DataType => {
+    return {
+      placeIdQueryParamName: 'place-id'
+    }
+  },
   computed: {
     activePlaceId (): number {
       return (this.$store.state.places as PlacesState).activePlaceId
@@ -63,7 +72,9 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>)
     }
   },
   mounted () {
-    this.fetchPlaces()
+    this.fetchPlaces().then(() => {
+      this.setActivePlaceIdFromQueryParam()
+    })
   },
   methods: {
     handleSearchChange (placeId: number | null) {
@@ -74,10 +85,20 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>)
     handleMarkerClick (_event: Event, placeId: number): void {
       this.setActivePlace(placeId)
     },
+    setActivePlaceIdFromQueryParam () {
+      const placeIdFromQuery = this.$route.query[this.placeIdQueryParamName]
+      if (placeIdFromQuery) {
+        this.setActivePlace(parseInt(placeIdFromQuery as string))
+      }
+    },
     markerActivationAction (placeId: number) {
       this._resetAllMarkersStatuses()
       this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       this._showPlaceContentInAsideBar(placeId)
+      this._addActivePlaceIdQueryParam(placeId)
+    },
+    _addActivePlaceIdQueryParam (placeId: number) {
+      this.$router.push({ query: { [this.placeIdQueryParamName]: `${placeId}` } })
     },
     _showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
