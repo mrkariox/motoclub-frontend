@@ -1,5 +1,20 @@
 # motoclub-frontend
 
+## Installation
+
+1. Clone this repository
+2. Copy env file `cp .env.example .env`
+4. Run `npm install`
+5. Run `npm run dev`
+
+## Configuration
+
+Edit the `.env` file from frontend directory to change google map api key and backend api url.
+
+## Frontend
+
+Frontend is available at `http://localhost:3000`
+
 ## Build Setup
 
 ```bash
