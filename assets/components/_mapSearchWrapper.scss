@@ -1,0 +1,9 @@
+.mapSearchWrapper{
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 15px;
+  max-width: 100%;
+}
