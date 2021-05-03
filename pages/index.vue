@@ -110,7 +110,9 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>)
         }
       })
       this.changeNavButtonVisibility(true)
-      this.changeAsideBarActiveState(true)
+      setTimeout(() => {
+        this.changeAsideBarActiveState(true)
+      }, 100)
     },
     ...mapActions({
       fetchPlaces: 'places/fetchPlaces',
