@@ -1,6 +1,7 @@
 <template>
   <div class="search">
     <v-autocomplete
+      :disabled="disabled"
       :items="searchItems"
       rounded
       solo
@@ -8,7 +9,7 @@
       :value="activePlaceId"
       :no-data-text="noDataText"
       :placeholder="placeholderText"
-      @change="$emit('change', $event)"
+      @change="handleChange"
     />
   </div>
 </template>
@@ -22,6 +23,7 @@ import { AutocompleteItem } from '~/types/AutocompleteItem'
 interface DataType {
   noDataText: string,
   placeholderText: string,
+  disabled: boolean
 }
 
 const places: PropOptions<PlaceGroup> = {
@@ -41,7 +43,8 @@ export default Vue.extend({
   data: (): DataType => {
     return {
       noDataText: 'Nie udało się odnaleźć takiego miejsca.',
-      placeholderText: 'Wyszukaj miejsce...'
+      placeholderText: 'Wyszukaj miejsce...',
+      disabled: false
     }
   },
   computed: {
@@ -56,6 +59,16 @@ export default Vue.extend({
         }
       }
       return items
+    }
+  },
+  methods: {
+    handleChange ($event: Event) {
+      // hack to unfocus input
+      this.disabled = true
+      setTimeout(() => {
+        this.disabled = false
+      }, 100)
+      this.$emit('change', $event)
     }
   }
 })
