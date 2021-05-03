@@ -5,8 +5,8 @@ export default class Place {
   public readonly id: number;
   public readonly name: string;
   public readonly description: string|null;
-  public readonly lat: number|null;
-  public readonly lng: number|null;
+  public readonly lat: number;
+  public readonly lng: number;
   public readonly gallery: Image[];
 
   constructor ({ description, gallery, id, lat, lng, name }: PlaceConstructor) {

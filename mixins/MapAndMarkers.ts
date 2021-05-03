@@ -4,14 +4,12 @@ import { google as googleConfig } from '~/config/google'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { MapMarkerData } from '~/types/MapMarkerData'
 import { PlacesState } from '~/store/places'
+import { Cords } from '~/types/Cords'
 import Marker = google.maps.Marker;
 
 interface DataTypes {
   markerNameBase: string
-  center: {
-    lat: number,
-    lng: number
-  },
+  center: Cords,
   markerIcons: typeof googleConfig.markerIcons,
   styles: typeof googleConfig.styles
 }
@@ -42,6 +40,9 @@ export default Vue.extend({
   methods: {
     createMarkerRefName (index: number): string {
       return this.markerNameBase + index
+    },
+    reCenterMap (cords: Cords) {
+      this.center = cords
     },
     _setMarkerActive (markerRef: Marker): void {
       markerRef.setIcon(this.markerIcons.active)

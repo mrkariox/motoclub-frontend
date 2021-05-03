@@ -79,6 +79,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>)
   methods: {
     handleSearchChange (placeId: number | null) {
       if (placeId !== null) {
+        this.reCenterMap({ lat: this.places[placeId].lat, lng: this.places[placeId].lng })
         this.setActivePlace(placeId)
       }
     },
@@ -86,9 +87,10 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>)
       this.setActivePlace(placeId)
     },
     setActivePlaceIdFromQueryParam () {
-      const placeIdFromQuery = this.$route.query[this.placeIdQueryParamName]
+      const placeIdFromQuery = this.$route.query[this.placeIdQueryParamName] as string
       if (placeIdFromQuery) {
-        this.setActivePlace(parseInt(placeIdFromQuery as string))
+        this.reCenterMap({ lat: this.places[parseInt(placeIdFromQuery)].lat, lng: this.places[parseInt(placeIdFromQuery)].lng })
+        this.setActivePlace(parseInt(placeIdFromQuery))
       }
     },
     markerActivationAction (placeId: number) {
