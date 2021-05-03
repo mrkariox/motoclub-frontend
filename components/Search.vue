@@ -63,12 +63,14 @@ export default Vue.extend({
   },
   methods: {
     handleChange ($event: Event) {
-      // hack to unfocus input
+      this.$emit('change', $event)
+      this.unFocusInput()
+    },
+    unFocusInput () {
       this.disabled = true
       setTimeout(() => {
         this.disabled = false
       }, 100)
-      this.$emit('change', $event)
     }
   }
 })
