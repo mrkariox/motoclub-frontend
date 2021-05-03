@@ -5,7 +5,7 @@ export default class Motoclub {
 
   constructor ($axios: NuxtAxiosInstance) {
     this.http = $axios.create({
-      baseURL: process.env.API_URL + '/wp-json/wp/v2',
+      baseURL: process.env.NUXT_ENV_API_URL + '/wp-json/wp/v2',
       headers: { Accept: 'application/json' }
     })
   }

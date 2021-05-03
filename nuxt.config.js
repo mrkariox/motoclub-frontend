@@ -57,10 +57,10 @@ export default {
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
 
-  dev: process.env.NODE_ENV !== 'production',
+  dev: process.env.NUXT_ENV_NODE_ENV !== 'production',
 
   env: {
-    googleApiKey: process.env.GOOGLE_MAPS_API_KEY
+    googleApiKey: process.env.NUXT_ENV_GOOGLE_MAPS_API_KEY
   },
 
   typescript: {
