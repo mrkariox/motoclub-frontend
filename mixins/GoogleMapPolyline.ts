@@ -4,6 +4,9 @@ import { MapState } from '~/store/map'
 
 export default Vue.extend({
   computed: {
+    currentTripId () {
+      return (this.$store.state.map as MapState).currentTripId
+    },
     isPolylineShown () {
       return (this.$store.state.map as MapState).isPolylineShown
     },

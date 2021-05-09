@@ -42,7 +42,6 @@ import { Image } from '~/types/Image'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlacesState } from '~/store/places'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
-import { MapState } from '~/store/map'
 
 const props: PropOptions<{ placeId: number, name: string, description: string, gallery: Image[] }> = {
   required: true
@@ -67,7 +66,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolylin
       return (this.$store.state.places as PlacesState).places[(this.props.placeId as number)].tripId
     },
     isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap (): boolean {
-      return this.tripIdOfCurrentPlace === (this.$store.state.map as MapState).currentTripId
+      return this.tripIdOfCurrentPlace === this.currentTripId
     }
   },
   methods: {
