@@ -1,9 +1,12 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { PlaceGroup } from '~/types/PlaceGroup'
+import { Cords } from '~/types/Cords'
 
 export const state = () => ({
   places: {} as PlaceGroup,
-  activePlaceId: null as unknown as number
+  activePlaceId: null as unknown as number,
+  isPolylineShown: false as boolean,
+  placesForPolyline: [] as unknown as Array<Cords>
 })
 
 export type PlacesState = ReturnType<typeof state>

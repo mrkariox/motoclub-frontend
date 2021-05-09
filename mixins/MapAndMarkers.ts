@@ -6,11 +6,11 @@ import { MapMarkerData } from '~/types/MapMarkerData'
 import { PlacesState } from '~/store/places'
 import { Cords } from '~/types/Cords'
 import Marker = google.maps.Marker;
+import Point = google.maps.Point;
 
 interface DataTypes {
   markerNameBase: string
   center: Cords,
-  markerIcons: typeof googleConfig.markerIcons,
   styles: typeof googleConfig.styles
 }
 
@@ -22,7 +22,6 @@ export default Vue.extend({
         lat: 52.127956,
         lng: 19.285033
       },
-      markerIcons: googleConfig.markerIcons,
       styles: googleConfig.styles
     }
   },
@@ -35,6 +34,12 @@ export default Vue.extend({
     },
     markers (): MapMarkerData[] {
       return PlaceTransformer.placesGroupToMapMarkerDataArray(this.places)
+    },
+    markerIcons (): {default: typeof googleConfig.markerIcons.default & {anchor: Point}, active: typeof googleConfig.markerIcons.active & {anchor: Point}} {
+      return {
+        default: { ...googleConfig.markerIcons.default, anchor: new this.google.maps.Point(16.5, 46) },
+        active: { ...googleConfig.markerIcons.active, anchor: new this.google.maps.Point(16.5, 46) }
+      }
     }
   },
   methods: {

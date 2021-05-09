@@ -34,6 +34,7 @@
         :icon="markerIcons.default"
         @click="handleMarkerClick($event, m.placeId)"
       />
+      <gmap-polyline v-if="isPolylineShown" :path="placesForPolyline" :editable="false" />
     </GmapMap>
   </div>
 </template>
@@ -45,16 +46,18 @@ import Search from '~/components/Search.vue'
 import MapSearchWrapper from '~/components/MapSearchWrapper.vue'
 import MapAndMarkers from '~/mixins/MapAndMarkers'
 import { PlacesState } from '~/store/places'
+import MapPolyline from '~/mixins/MapPolyline'
 import Marker = google.maps.Marker;
 
 interface DataType {
   placeIdQueryParamName: string
 }
 
-export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers>>).extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers> & InstanceType<typeof MapPolyline>>).extend({
   components: { MapSearchWrapper, Search },
   mixins: [
-    MapAndMarkers
+    MapAndMarkers,
+    MapPolyline
   ],
   data: (): DataType => {
     return {
