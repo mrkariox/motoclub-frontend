@@ -33,12 +33,6 @@ export const mutations: MutationTree<PlacesState> = {
 }
 
 export const actions: ActionTree<PlacesState, PlacesState> = {
-  fetchPlaces ({ commit }): Promise<PlaceGroup> {
-    return this.$placesRepository.getPlaces().then((places) => {
-      commit('SET_PLACES', places)
-      return places
-    })
-  },
   setActivePlace ({ state, commit }, placeId: number) {
     // if place with specific ID exists in state set it as active
     if (state.places[placeId]) {
