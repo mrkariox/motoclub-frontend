@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { mapActions } from 'vuex'
 import { PlacesState } from '~/store/places'
 
 export default Vue.extend({
@@ -9,5 +10,12 @@ export default Vue.extend({
     placesForPolyline () {
       return (this.$store.state.places as PlacesState).placesForPolyline
     }
+  },
+  methods: {
+    ...mapActions({
+      togglePolyline: 'places/togglePolyline',
+      setPlacesForPolyline: 'places/setPlacesForPolyline',
+      changeIsPolylineShownFlag: 'places/changeIsPolylineShownFlag'
+    })
   }
 })

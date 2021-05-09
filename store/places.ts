@@ -17,6 +17,12 @@ export const mutations: MutationTree<PlacesState> = {
   },
   SET_ACTIVE_PLACE (state, placeId: number) {
     state.activePlaceId = placeId
+  },
+  CHANGE_IS_POLYLINE_SHOWN_FLAG (state, flag: boolean) {
+    state.isPolylineShown = flag
+  },
+  SET_PLACES_FOR_POLYLINE (state, placesForPolyline: Array<Cords>) {
+    state.placesForPolyline = placesForPolyline
   }
 }
 
@@ -31,5 +37,14 @@ export const actions: ActionTree<PlacesState, PlacesState> = {
     if (state.places[placeId]) {
       commit('SET_ACTIVE_PLACE', placeId)
     }
+  },
+  setPlacesForPolyline ({ commit }, placesForPolyLine: Array<Cords>) {
+    commit('SET_ACTIVE_PLACE', placesForPolyLine)
+  },
+  changeIsPolylineShownFlag ({ commit }, flag: boolean) {
+    commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', flag)
+  },
+  togglePolyline ({ state, commit }) {
+    commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', !state.isPolylineShown)
   }
 }

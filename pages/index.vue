@@ -7,7 +7,7 @@
         @change="handleSearchChange"
       />
     </map-search-wrapper>
-    <GmapMap
+    <gmap-map
       :center="center"
       :zoom="7"
       map-type-id="terrain"
@@ -24,7 +24,7 @@
         fullscreenControl: false
       }"
     >
-      <GmapMarker
+      <gmap-marker
         v-for="(m) in markers"
         :key="m.placeId"
         :ref="createMarkerRefName(m.placeId)"
@@ -35,7 +35,7 @@
         @click="handleMarkerClick($event, m.placeId)"
       />
       <gmap-polyline v-if="isPolylineShown" :path="placesForPolyline" :editable="false" />
-    </GmapMap>
+    </gmap-map>
   </div>
 </template>
 
