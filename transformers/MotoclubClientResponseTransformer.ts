@@ -16,6 +16,7 @@ export default class MotoclubClientResponseTransformer {
         gallery: (elem.ACF?.gallery && Array.isArray(elem.ACF?.gallery))
           ? elem.ACF?.gallery?.map((image: any) => {
             return {
+              id: image.id,
               name: image.name,
               alt: image.alt,
               title: image.title,
