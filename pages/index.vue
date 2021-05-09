@@ -20,7 +20,7 @@
         rotateControl: false,
         fullscreenControl: true,
         disableDefaultUi: false,
-        styles:styles,
+        styles:config.styles,
         fullscreenControl: false
       }"
     >
@@ -34,7 +34,7 @@
         :icon="markerIcons.default"
         @click="handleMarkerClick($event, m.placeId)"
       />
-      <gmap-polyline v-if="isPolylineShown" :path="placesForPolyline" :editable="false" />
+      <gmap-polyline v-if="isPolylineShown" :path="placesForPolyline" :editable="false" :options="config.polylineOptions" />
     </gmap-map>
   </div>
 </template>

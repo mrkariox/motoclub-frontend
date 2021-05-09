@@ -1,5 +1,6 @@
 import { MapMarkerData } from '~/types/MapMarkerData'
 import { PlaceGroup } from '~/types/PlaceGroup'
+import { Cords } from '~/types/Cords'
 
 export default class PlaceTransformer {
   public static placesGroupToMapMarkerDataArray (places: PlaceGroup): MapMarkerData[] {
@@ -21,5 +22,16 @@ export default class PlaceTransformer {
       })
     }
     return output
+  }
+
+  public static placesGroupToCoordsArray (places: PlaceGroup): Cords[] {
+    const placesArray = []
+    for (const placeId in places) {
+      placesArray.push({
+        lat: places[placeId].lat,
+        lng: places[placeId].lng
+      })
+    }
+    return placesArray
   }
 }

@@ -4,7 +4,7 @@ import { Cords } from '~/types/Cords'
 
 interface DataTypes {
   center: Cords,
-  styles: typeof googleConfig.styles
+  config: typeof googleConfig
 }
 
 export default Vue.extend({
@@ -14,7 +14,7 @@ export default Vue.extend({
         lat: 52.127956,
         lng: 19.285033
       },
-      styles: googleConfig.styles
+      config: googleConfig
     }
   },
   methods: {

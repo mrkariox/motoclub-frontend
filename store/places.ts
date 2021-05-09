@@ -39,7 +39,7 @@ export const actions: ActionTree<PlacesState, PlacesState> = {
     }
   },
   setPlacesForPolyline ({ commit }, placesForPolyLine: Array<Cords>) {
-    commit('SET_ACTIVE_PLACE', placesForPolyLine)
+    commit('SET_PLACES_FOR_POLYLINE', placesForPolyLine)
   },
   changeIsPolylineShownFlag ({ commit }, flag: boolean) {
     commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', flag)
