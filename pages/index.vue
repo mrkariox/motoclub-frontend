@@ -124,6 +124,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     ...mapActions({
       fetchPlaces: 'places/fetchPlaces',
       setActivePlace: 'places/setActivePlace',
+      fetchTrips: 'places/fetchTrips',
       changeAsideComponent: 'aside-bar/changeAsideComponent',
       changeAsideBarActiveState: 'aside-bar/changeAsideBarActiveState',
       changeNavButtonVisibility: 'app-bar/changeNavButtonVisibility'

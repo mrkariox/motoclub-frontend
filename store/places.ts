@@ -1,12 +1,14 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { PlaceGroup } from '~/types/PlaceGroup'
 import { Cords } from '~/types/Cords'
+import Trip from '~/models/Trip'
 
 export const state = () => ({
   places: {} as PlaceGroup,
   activePlaceId: null as unknown as number,
   isPolylineShown: false as boolean,
-  placesForPolyline: [] as unknown as Array<Cords>
+  placesForPolyline: [] as unknown as Array<Cords>,
+  trips: [] as unknown as Trip[]
 })
 
 export type PlacesState = ReturnType<typeof state>
@@ -23,6 +25,9 @@ export const mutations: MutationTree<PlacesState> = {
   },
   SET_PLACES_FOR_POLYLINE (state, placesForPolyline: Array<Cords>) {
     state.placesForPolyline = placesForPolyline
+  },
+  SET_TRIPS (state, trips: Trip[]) {
+    state.trips = trips
   }
 }
 
@@ -46,5 +51,10 @@ export const actions: ActionTree<PlacesState, PlacesState> = {
   },
   togglePolyline ({ state, commit }) {
     commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', !state.isPolylineShown)
+  },
+  fetchTrips ({ commit }) : Promise<void> {
+    return this.$placesRepository.getTrips().then((trips) => {
+      commit('SET_TRIPS', trips)
+    })
   }
 }
