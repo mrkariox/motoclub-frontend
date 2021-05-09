@@ -44,20 +44,22 @@ import Vue, { VueConstructor } from 'vue'
 import { mapActions } from 'vuex'
 import Search from '~/components/Search.vue'
 import MapSearchWrapper from '~/components/MapSearchWrapper.vue'
-import MapAndMarkers from '~/mixins/MapAndMarkers'
 import { PlacesState } from '~/store/places'
-import MapPolyline from '~/mixins/MapPolyline'
+import GoogleMap from '~/mixins/GoogleMap'
+import GoogleMapMarkers from '~/mixins/GoogleMapMarkers'
+import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
 import Marker = google.maps.Marker;
 
 interface DataType {
   placeIdQueryParamName: string
 }
 
-export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers> & InstanceType<typeof MapPolyline>>).extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & InstanceType<typeof GoogleMapMarkers> & InstanceType<typeof GoogleMapPolyline>>).extend({
   components: { MapSearchWrapper, Search },
   mixins: [
-    MapAndMarkers,
-    MapPolyline
+    GoogleMap,
+    GoogleMapMarkers,
+    GoogleMapPolyline
   ],
   data: (): DataType => {
     return {
@@ -97,15 +99,15 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof MapAndMarkers> &
       }
     },
     markerActivationAction (placeId: number) {
-      this._resetAllMarkersStatuses()
-      this._setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
-      this._showPlaceContentInAsideBar(placeId)
-      this._addActivePlaceIdQueryParam(placeId)
+      this.resetAllMarkersStatuses()
+      this.setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
+      this.showPlaceContentInAsideBar(placeId)
+      this.addActivePlaceIdQueryParam(placeId)
     },
-    _addActivePlaceIdQueryParam (placeId: number) {
+    addActivePlaceIdQueryParam (placeId: number) {
       this.$router.push({ query: { [this.placeIdQueryParamName]: `${placeId}` } })
     },
-    _showPlaceContentInAsideBar (placeId: number): void {
+    showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
         component: 'Place',
         props: {
