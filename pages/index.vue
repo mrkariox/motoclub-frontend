@@ -111,6 +111,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
       this.changeAsideComponent({
         component: 'Place',
         props: {
+          placeId,
           name: this.places[placeId].name,
           description: this.places[placeId].description,
           gallery: this.places[placeId].gallery

@@ -42,8 +42,9 @@ import { Image } from '~/types/Image'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlacesState } from '~/store/places'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
+import { MapState } from '~/store/map'
 
-const props: PropOptions<{ name: string, description: string, gallery: Image[] }> = {
+const props: PropOptions<{ placeId: number, name: string, description: string, gallery: Image[] }> = {
   required: true
 }
 
@@ -59,18 +60,35 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolylin
     props
   },
   computed: {
-    tooltipText () {
-      return this.isPolylineShown ? 'Ukryj trasę' : 'Pokaż całą trasę'
+    tooltipText (): string {
+      return this.isPolylineShown && this.isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap ? 'Ukryj trasę' : 'Pokaż całą trasę'
+    },
+    tripIdOfCurrentPlace (): number {
+      return (this.$store.state.places as PlacesState).places[(this.props.placeId as number)].tripId
+    },
+    isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap (): boolean {
+      return this.tripIdOfCurrentPlace === (this.$store.state.map as MapState).currentTripId
     }
   },
   methods: {
     handleShowTrackOnMap () {
-      if (!this.isPolylineShown) {
-        this.setPlacesForPolyline(
-          PlaceTransformer.placesGroupToCoordsArray((this.$store.state.places as PlacesState).places)
-        )
+      const placesForPolyLine = (this.$store.state.places as PlacesState).trips.find((trip) => {
+        return trip.id === this.tripIdOfCurrentPlace
+      })?.places
+
+      if (!placesForPolyLine) {
+        return this.changeIsPolylineShownFlag(false)
       }
-      this.togglePolyline()
+
+      if (!this.isPolylineShown || !this.isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap) {
+        this.setCurrentTripId(this.tripIdOfCurrentPlace)
+        this.setPlacesForPolyline(
+          PlaceTransformer.placesGroupToCoordsArray(placesForPolyLine)
+        )
+        return this.changeIsPolylineShownFlag(true)
+      }
+
+      this.changeIsPolylineShownFlag(false)
     }
   }
 })
