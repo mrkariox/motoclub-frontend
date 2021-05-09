@@ -39,9 +39,12 @@
 import Vue, { PropOptions, VueConstructor } from 'vue'
 import Gallery from '@/components/Gallery.vue'
 import { Image } from '~/types/Image'
-import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { PlacesState } from '~/store/places'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
+
+interface DataType {
+  tripIdQueryParamName: string
+}
 
 const props: PropOptions<{ placeId: number, name: string, description: string, gallery: Image[] }> = {
   required: true
@@ -58,6 +61,11 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolylin
   props: {
     props
   },
+  data: (): DataType => {
+    return {
+      tripIdQueryParamName: 'trip-id'
+    }
+  },
   computed: {
     tooltipText (): string {
       return this.isPolylineShown && this.isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap ? 'Ukryj trasę' : 'Pokaż całą trasę'
@@ -71,23 +79,23 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolylin
   },
   methods: {
     handleShowTrackOnMap () {
-      const placesForPolyLine = (this.$store.state.places as PlacesState).trips.find((trip) => {
-        return trip.id === this.tripIdOfCurrentPlace
-      })?.places
-
-      if (!placesForPolyLine) {
-        return this.changeIsPolylineShownFlag(false)
-      }
-
       if (!this.isPolylineShown || !this.isTripIdOfCurrentPlaceEqualToCurrentTripShownOnMap) {
-        this.setCurrentTripId(this.tripIdOfCurrentPlace)
-        this.setPlacesForPolyline(
-          PlaceTransformer.placesGroupToCoordsArray(placesForPolyLine)
-        )
-        return this.changeIsPolylineShownFlag(true)
+        if (this.setCurrentTripIdAndPlacesForPolyline(this.tripIdOfCurrentPlace)) {
+          this.setCurrentTripIdQueryParam(this.tripIdOfCurrentPlace)
+          return this.changeIsPolylineShownFlag(true)
+        }
       }
 
+      this.resetCurrentTripIdQueryParam()
       this.changeIsPolylineShownFlag(false)
+    },
+    setCurrentTripIdQueryParam (tripId: number) {
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [this.tripIdQueryParamName]: `${tripId}` } })
+    },
+    resetCurrentTripIdQueryParam () {
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [this.tripIdQueryParamName]: null } })
     }
   }
 })

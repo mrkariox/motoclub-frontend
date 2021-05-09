@@ -51,7 +51,8 @@ import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
 import Marker = google.maps.Marker;
 
 interface DataType {
-  placeIdQueryParamName: string
+  placeIdQueryParamName: string,
+  tripIdQueryParamName: string
 }
 
 export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & InstanceType<typeof GoogleMapMarkers> & InstanceType<typeof GoogleMapPolyline>>).extend({
@@ -63,7 +64,8 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
   ],
   data: (): DataType => {
     return {
-      placeIdQueryParamName: 'place-id'
+      placeIdQueryParamName: 'place-id',
+      tripIdQueryParamName: 'trip-id'
     }
   },
   computed: {
@@ -79,6 +81,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
   mounted () {
     this.fetchTrips().then((_trips) => {
       this.setActivePlaceIdFromQueryParam()
+      this.setTripIdAndMapPolylineFromQueryParam()
     })
   },
   methods: {
@@ -98,6 +101,14 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
         this.setActivePlace(parseInt(placeIdFromQuery))
       }
     },
+    setTripIdAndMapPolylineFromQueryParam () {
+      const tripIdFromQuery = this.$route.query[this.tripIdQueryParamName] as string
+
+      if (tripIdFromQuery) {
+        this.setCurrentTripIdAndPlacesForPolyline(parseInt(tripIdFromQuery))
+        this.changeIsPolylineShownFlag(true)
+      }
+    },
     markerActivationAction (placeId: number) {
       this.resetAllMarkersStatuses()
       this.setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
@@ -105,7 +116,8 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
       this.addActivePlaceIdQueryParam(placeId)
     },
     addActivePlaceIdQueryParam (placeId: number) {
-      this.$router.push({ query: { [this.placeIdQueryParamName]: `${placeId}` } })
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [this.placeIdQueryParamName]: `${placeId}` } })
     },
     showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({

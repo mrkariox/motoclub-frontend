@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import { mapActions } from 'vuex'
 import { MapState } from '~/store/map'
+import { PlacesState } from '~/store/places'
+import PlaceTransformer from '~/transformers/PlaceTransformer'
 
 export default Vue.extend({
   computed: {
@@ -15,6 +17,20 @@ export default Vue.extend({
     }
   },
   methods: {
+    setCurrentTripIdAndPlacesForPolyline (tripId: number): boolean {
+      const placesForPolyLine = (this.$store.state.places as PlacesState).trips.find((trip) => {
+        return trip.id === tripId
+      })?.places
+
+      if (placesForPolyLine) {
+        this.setCurrentTripId(tripId)
+        this.setPlacesForPolyline(
+          PlaceTransformer.placesGroupToCoordsArray(placesForPolyLine)
+        )
+        return true
+      }
+      return false
+    },
     ...mapActions({
       togglePolyline: 'map/togglePolyline',
       setPlacesForPolyline: 'map/setPlacesForPolyline',
