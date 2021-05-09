@@ -48,26 +48,18 @@ import { PlacesState } from '~/store/places'
 import GoogleMap from '~/mixins/GoogleMap'
 import GoogleMapMarkers from '~/mixins/GoogleMapMarkers'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
+import { QueryParam } from '~/enums/QueryParam'
+import GoogleMapQueryParamHandlers from '~/mixins/GoogleMapQueryParamHandlers'
 import Marker = google.maps.Marker;
 
-interface DataType {
-  placeIdQueryParamName: string,
-  tripIdQueryParamName: string
-}
-
-export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & InstanceType<typeof GoogleMapMarkers> & InstanceType<typeof GoogleMapPolyline>>).extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & InstanceType<typeof GoogleMapMarkers> & InstanceType<typeof GoogleMapPolyline> & InstanceType<typeof GoogleMapQueryParamHandlers>>).extend({
   components: { MapSearchWrapper, Search },
   mixins: [
     GoogleMap,
     GoogleMapMarkers,
-    GoogleMapPolyline
+    GoogleMapPolyline,
+    GoogleMapQueryParamHandlers
   ],
-  data: (): DataType => {
-    return {
-      placeIdQueryParamName: 'place-id',
-      tripIdQueryParamName: 'trip-id'
-    }
-  },
   computed: {
     activePlaceId (): number {
       return (this.$store.state.places as PlacesState).activePlaceId
@@ -94,21 +86,6 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     handleMarkerClick (_event: Event, placeId: number): void {
       this.setActivePlace(placeId)
     },
-    setActivePlaceIdFromQueryParam () {
-      const placeIdFromQuery = this.$route.query[this.placeIdQueryParamName] as string
-      if (placeIdFromQuery) {
-        this.reCenterMap({ lat: this.places[parseInt(placeIdFromQuery)].lat, lng: this.places[parseInt(placeIdFromQuery)].lng })
-        this.setActivePlace(parseInt(placeIdFromQuery))
-      }
-    },
-    setTripIdAndMapPolylineFromQueryParam () {
-      const tripIdFromQuery = this.$route.query[this.tripIdQueryParamName] as string
-
-      if (tripIdFromQuery) {
-        this.setCurrentTripIdAndPlacesForPolyline(parseInt(tripIdFromQuery))
-        this.changeIsPolylineShownFlag(true)
-      }
-    },
     markerActivationAction (placeId: number) {
       this.resetAllMarkersStatuses()
       this.setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
@@ -117,7 +94,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     },
     addActivePlaceIdQueryParam (placeId: number) {
       const currentQuery = this.$route.query
-      this.$router.push({ query: { ...currentQuery, [this.placeIdQueryParamName]: `${placeId}` } })
+      this.$router.push({ query: { ...currentQuery, [QueryParam.PLACE_ID]: `${placeId}` } })
     },
     showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
