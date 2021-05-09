@@ -8,13 +8,15 @@ export default class Place {
   public readonly lat: number;
   public readonly lng: number;
   public readonly gallery: Image[];
+  public readonly tripId: number;
 
-  constructor ({ description, gallery, id, lat, lng, name }: PlaceConstructor) {
+  constructor ({ description, gallery, id, lat, lng, name, tripId }: PlaceConstructor) {
     this.id = id
     this.name = name
     this.description = description
     this.lat = lat
     this.lng = lng
     this.gallery = gallery
+    this.tripId = tripId
   }
 }

@@ -77,7 +77,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     }
   },
   mounted () {
-    this.fetchPlaces().then(() => {
+    this.fetchTrips().then((_trips) => {
       this.setActivePlaceIdFromQueryParam()
     })
   },
@@ -122,7 +122,6 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
       }, 100)
     },
     ...mapActions({
-      fetchPlaces: 'places/fetchPlaces',
       setActivePlace: 'places/setActivePlace',
       fetchTrips: 'places/fetchTrips',
       changeAsideComponent: 'aside-bar/changeAsideComponent',

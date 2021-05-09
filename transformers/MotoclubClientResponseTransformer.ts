@@ -25,7 +25,8 @@ export default class MotoclubClientResponseTransformer {
               sizes: image.sizes
             }
           })
-          : []
+          : [],
+        tripId: 0 // wrong - but cant get this id from this endpoint
       })
       return m
     }, {})
@@ -50,7 +51,8 @@ export default class MotoclubClientResponseTransformer {
             id: trip.places[placeId].id,
             lat: trip.places[placeId].lat,
             lng: trip.places[placeId].lng,
-            name: trip.places[placeId].name
+            name: trip.places[placeId].name,
+            tripId: trip.places[placeId].tripId
           })
         }
       }

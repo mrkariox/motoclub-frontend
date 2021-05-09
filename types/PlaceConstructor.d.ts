@@ -7,4 +7,5 @@ export type PlaceConstructor = {
   lat: number;
   lng: number;
   gallery: Image[];
+  tripId: number;
 }
