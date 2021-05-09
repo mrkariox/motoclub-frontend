@@ -13,7 +13,7 @@ export const mutations: MutationTree<MapState> = {
   CHANGE_IS_POLYLINE_SHOWN_FLAG (state, flag: boolean) {
     state.isPolylineShown = flag
   },
-  SET_PLACES_FOR_POLYLINE (state, placesForPolyline: Array<Cords>) {
+  SET_PLACES_COORDS_FOR_POLYLINE (state, placesForPolyline: Array<Cords>) {
     state.placesForPolyline = placesForPolyline
   },
   SET_CURRENT_TRIP_ID (state, tripId: number) {
@@ -22,8 +22,8 @@ export const mutations: MutationTree<MapState> = {
 }
 
 export const actions: ActionTree<MapState, MapState> = {
-  setPlacesForPolyline ({ commit }, placesForPolyLine: Array<Cords>) {
-    commit('SET_PLACES_FOR_POLYLINE', placesForPolyLine)
+  setPlacesCoordsForPolyline ({ commit }, placesForPolyLine: Array<Cords>) {
+    commit('SET_PLACES_COORDS_FOR_POLYLINE', placesForPolyLine)
   },
   changeIsPolylineShownFlag ({ commit }, flag: boolean) {
     commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', flag)

@@ -8,4 +8,5 @@ export type PlaceConstructor = {
   lng: number;
   gallery: Image[];
   tripId: number;
+  order: number;
 }

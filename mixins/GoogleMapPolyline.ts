@@ -24,7 +24,7 @@ export default Vue.extend({
 
       if (placesForPolyLine) {
         this.setCurrentTripId(tripId)
-        this.setPlacesForPolyline(
+        this.setPlacesCoordsForPolyline(
           PlaceTransformer.placesGroupToCoordsArray(placesForPolyLine)
         )
         return true
@@ -33,7 +33,7 @@ export default Vue.extend({
     },
     ...mapActions({
       togglePolyline: 'map/togglePolyline',
-      setPlacesForPolyline: 'map/setPlacesForPolyline',
+      setPlacesCoordsForPolyline: 'map/setPlacesCoordsForPolyline',
       changeIsPolylineShownFlag: 'map/changeIsPolylineShownFlag',
       setCurrentTripId: 'map/setCurrentTripId'
     })

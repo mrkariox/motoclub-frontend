@@ -23,7 +23,8 @@ export default class MotoclubClientResponseTransformer {
             lat: trip.places[placeId].lat,
             lng: trip.places[placeId].lng,
             name: trip.places[placeId].name,
-            tripId: trip.places[placeId].tripId
+            tripId: trip.places[placeId].tripId,
+            order: trip.places[placeId].order
           })
         }
       }
