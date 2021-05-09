@@ -4,7 +4,6 @@ import { PlacesState } from '~/store/places'
 import { MapMarkerData } from '~/types/MapMarkerData'
 import PlaceTransformer from '~/transformers/PlaceTransformer'
 import { google as googleConfig } from '~/config/google'
-
 import Point = google.maps.Point;
 import Marker = google.maps.Marker;
 
