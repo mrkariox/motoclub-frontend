@@ -28,9 +28,6 @@ export const actions: ActionTree<MapState, MapState> = {
   changeIsPolylineShownFlag ({ commit }, flag: boolean) {
     commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', flag)
   },
-  togglePolyline ({ state, commit }) {
-    commit('CHANGE_IS_POLYLINE_SHOWN_FLAG', !state.isPolylineShown)
-  },
   setCurrentTripId ({ commit }, tripId: number) {
     commit('SET_CURRENT_TRIP_ID', tripId)
   }
