@@ -1,7 +1,6 @@
 <template>
   <div class="search">
     <v-autocomplete
-      ref="autocompleteComponent"
       :items="searchItems"
       rounded
       solo
@@ -65,12 +64,7 @@ export default Vue.extend({
       this.unFocusInput()
     },
     unFocusInput () {
-      const input = ((this.$refs.autocompleteComponent as any).$el as HTMLElement).querySelector('input')!
-
-      input.setAttribute('style', 'display:none;')
-      setTimeout(() => {
-        input.setAttribute('style', 'display:block;')
-      }, 100)
+      (document.activeElement as HTMLInputElement).blur()
     }
   }
 })
