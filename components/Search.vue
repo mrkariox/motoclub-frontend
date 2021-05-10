@@ -1,6 +1,7 @@
 <template>
   <div class="search">
     <v-autocomplete
+      v-show="!disabled"
       :disabled="disabled"
       :items="searchItems"
       rounded
