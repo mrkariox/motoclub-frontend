@@ -23,21 +23,29 @@
     <v-main>
       <nuxt keep-alive />
     </v-main>
+    <fs-lightbox
+      :toggler="galleryToggleFlag"
+      :sources="imageUrlsArray"
+      :types="imageUrlsArray.map(image=>{return 'image'})"
+      :source-index="currentGalleryIndex"
+    />
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
 import { mapActions } from 'vuex'
 import { AsideBarState } from '@/store/aside-bar'
 import { AppBarState } from '@/store/app-bar'
+import AppGallery from '~/mixins/AppGallery'
 
 interface DataType {
   title: string
 }
 
-export default Vue.extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof AppGallery>>).extend({
   name: 'Default',
+  mixins: [AppGallery],
   data: (): DataType => {
     return {
       title: 'Motoclub'

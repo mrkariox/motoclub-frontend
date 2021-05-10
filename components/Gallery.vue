@@ -10,41 +10,30 @@
         class="cursor-pointer"
         :src="image.sizes['thumbnail-square']"
         aspect-ratio="1"
-        @click="openGallery(index)"
+        @click="handleImageClick(index)"
       />
     </v-col>
-    <gallery-modal v-model="galleryShown" :images="images" :index="carouselIndex" />
   </v-row>
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
-import GalleryModal from '@/components/GalleryModal.vue'
+import Vue, { PropOptions, VueConstructor } from 'vue'
 import { Image } from '~/types/Image'
+import AppGallery from '~/mixins/AppGallery'
 
 const images: PropOptions<Image[]> = {
   required: true
 }
 
-export default Vue.extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof AppGallery>>).extend({
   name: 'Gallery',
-  components: { GalleryModal },
+  mixins: [AppGallery],
   props: {
     images
   },
-  data () {
-    return {
-      galleryShown: false,
-      carouselIndex: 0
-    }
-  },
   methods: {
-    openGallery (index: number) {
-      const self = this
-      this.carouselIndex = index
-      setTimeout(() => {
-        self.galleryShown = true
-      }, 200)
+    handleImageClick (index: number) {
+      this.openGallery(this.images, index)
     }
   }
 })
