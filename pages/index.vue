@@ -85,6 +85,9 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     },
     handleMarkerClick (_event: Event, placeId: number): void {
       this.setActivePlace(placeId)
+      setTimeout(() => {
+        this.changeAsideBarActiveState(true)
+      }, 100)
     },
     markerActivationAction (placeId: number) {
       this.resetAllMarkersStatuses()
@@ -107,9 +110,6 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
         }
       })
       this.changeNavButtonVisibility(true)
-      setTimeout(() => {
-        this.changeAsideBarActiveState(true)
-      }, 100)
     },
     ...mapActions({
       setActivePlace: 'places/setActivePlace',
