@@ -1,8 +1,7 @@
 <template>
   <div class="search">
     <v-autocomplete
-      v-show="!disabled"
-      :disabled="disabled"
+      ref="autocompleteComponent"
       :items="searchItems"
       rounded
       solo
@@ -23,8 +22,7 @@ import { AutocompleteItem } from '~/types/AutocompleteItem'
 
 interface DataType {
   noDataText: string,
-  placeholderText: string,
-  disabled: boolean
+  placeholderText: string
 }
 
 const places: PropOptions<PlaceGroup> = {
@@ -44,8 +42,7 @@ export default Vue.extend({
   data: (): DataType => {
     return {
       noDataText: 'Nie udało się odnaleźć takiego miejsca.',
-      placeholderText: 'Wyszukaj miejsce...',
-      disabled: false
+      placeholderText: 'Wyszukaj miejsce...'
     }
   },
   computed: {
@@ -68,9 +65,11 @@ export default Vue.extend({
       this.unFocusInput()
     },
     unFocusInput () {
-      this.disabled = true
+      const input = ((this.$refs.autocompleteComponent as any).$el as HTMLElement).querySelector('input')!
+
+      input.setAttribute('style', 'display:none;')
       setTimeout(() => {
-        this.disabled = false
+        input.setAttribute('style', 'display:block;')
       }, 100)
     }
   }
