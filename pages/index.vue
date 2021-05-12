@@ -48,7 +48,6 @@ import { PlacesState } from '~/store/places'
 import GoogleMap from '~/mixins/GoogleMap'
 import GoogleMapMarkers from '~/mixins/GoogleMapMarkers'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
-import { QueryParam } from '~/enums/QueryParam'
 import GoogleMapQueryParamHandlers from '~/mixins/GoogleMapQueryParamHandlers'
 import Marker = google.maps.Marker;
 
@@ -94,10 +93,6 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
       this.setMarkerActive((this.$refs[this.createMarkerRefName(placeId)] as Array<Vue & {$markerObject: Marker}>)[0].$markerObject)
       this.showPlaceContentInAsideBar(placeId)
       this.addActivePlaceIdQueryParam(placeId)
-    },
-    addActivePlaceIdQueryParam (placeId: number) {
-      const currentQuery = this.$route.query
-      this.$router.push({ query: { ...currentQuery, [QueryParam.PLACE_ID]: `${placeId}` } })
     },
     showPlaceContentInAsideBar (placeId: number): void {
       this.changeAsideComponent({
