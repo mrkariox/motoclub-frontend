@@ -41,19 +41,20 @@ import Gallery from '@/components/Gallery.vue'
 import { Image } from '~/types/Image'
 import { PlacesState } from '~/store/places'
 import GoogleMapPolyline from '~/mixins/GoogleMapPolyline'
-import { QueryParam } from '~/enums/QueryParam'
+import GoogleMapQueryParamHandlers from '~/mixins/GoogleMapQueryParamHandlers'
 
 const props: PropOptions<{ placeId: number, name: string, description: string, gallery: Image[] }> = {
   required: true
 }
 
-export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolyline>>).extend({
+export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolyline> & InstanceType<typeof GoogleMapQueryParamHandlers>>).extend({
   name: 'Place',
   components: {
     Gallery
   },
   mixins: [
-    GoogleMapPolyline
+    GoogleMapPolyline,
+    GoogleMapQueryParamHandlers
   ],
   props: {
     props
@@ -80,14 +81,6 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMapPolylin
 
       this.resetCurrentTripIdQueryParam()
       this.changeIsPolylineShownFlag(false)
-    },
-    setCurrentTripIdQueryParam (tripId: number) {
-      const currentQuery = this.$route.query
-      this.$router.push({ query: { ...currentQuery, [QueryParam.TRIP_ID]: `${tripId}` } })
-    },
-    resetCurrentTripIdQueryParam () {
-      const currentQuery = this.$route.query
-      this.$router.push({ query: { ...currentQuery, [QueryParam.TRIP_ID]: null } })
     }
   }
 })

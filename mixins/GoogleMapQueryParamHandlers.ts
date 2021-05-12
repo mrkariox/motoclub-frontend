@@ -11,6 +11,7 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
     GoogleMapPolyline
   ],
   methods: {
+    // Loads query params
     setActivePlaceIdFromQueryParam () {
       const placeIdFromQuery = this.$route.query[QueryParam.PLACE_ID] as string
       if (placeIdFromQuery) {
@@ -25,6 +26,19 @@ export default (Vue as VueConstructor<Vue & InstanceType<typeof GoogleMap> & Ins
         this.setCurrentTripIdAndPlacesForPolyline(parseInt(tripIdFromQuery))
         this.changeIsPolylineShownFlag(true)
       }
+    },
+    // Changes query params
+    addActivePlaceIdQueryParam (placeId: number) {
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [QueryParam.PLACE_ID]: `${placeId}` } })
+    },
+    setCurrentTripIdQueryParam (tripId: number) {
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [QueryParam.TRIP_ID]: `${tripId}` } })
+    },
+    resetCurrentTripIdQueryParam () {
+      const currentQuery = this.$route.query
+      this.$router.push({ query: { ...currentQuery, [QueryParam.TRIP_ID]: null } })
     },
     ...mapActions({
       setActivePlace: 'places/setActivePlace'
